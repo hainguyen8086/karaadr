@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.karama.data.DataLocalManager;
+import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.Config;
 import com.example.karama.helper.UIHelper;
@@ -32,13 +32,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DataLocalManager.init(mContext);
-        if (!DataLocalManager.getFirstInstall()) {
+        SharedPrefManager.init(mContext);
+        checkConnect();
+        checkFirstInstall();
+        checkTokenInvalid();
+        initView();
+        initClick();
+    }
+
+    private void checkTokenInvalid() {
+        if (!SharedPrefManager.getRefreshToken().equals("NON")) {
+            if (!SharedPrefManager.getAccessToken().equals("NON")) {
+
+            }
+        }
+    }
+
+    private void checkFirstInstall() {
+        if (!SharedPrefManager.getFirstInstall()) {
             Toast.makeText(this, "First install App", Toast.LENGTH_SHORT).show();
             Log.e("==share:", "First install App");
-            DataLocalManager.setPrefFirstInstall(true);
+            SharedPrefManager.setPrefFirstInstall(true);
         }
+    }
 
+    private void checkConnect() {
         if (isNetwork(getApplicationContext())){
 
             Toast.makeText(getApplicationContext(), "Internet Connected", Toast.LENGTH_SHORT).show();
@@ -47,21 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "Internet Is Not Connected", Toast.LENGTH_SHORT).show();
         }
-
-        initView();
-        initClick();
-        APIServices.getUser(new CallbackResponse() {
-            @Override
-            public void Success(Response<?> response) {
-                ResUser resUser = (ResUser) response.body();
-                Log.e("==user:", resUser.getData().getEmail());
-            }
-
-            @Override
-            public void Error(String error) {
-                Log.e("==user:", error);
-            }
-        });
     }
 
     private void initClick() {
