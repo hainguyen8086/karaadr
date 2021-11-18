@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLClassLoader;
+import java.util.HashMap;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -134,6 +135,64 @@ public class APIServices {
         RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyUpdate);
         APIClient.getClient(Config.URL).create(APIInterface.class)
                 .updateProfile(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()),requestBody)
+                .enqueue(new Callback<ResProfile>() {
+                    @Override
+                    public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {
+                        if (response.isSuccessful()) {
+                            callbackResponse.Success(response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResProfile> call, Throwable t) {
+                        callbackResponse.Error(t.getMessage());
+                    }
+                });
+    }
+
+    public static void regis(CallbackResponse callbackResponse, String bodyReg) {
+        RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyReg);
+        APIClient.getClient(Config.URL).create(APIInterface.class)
+                .regisUser(requestBody)
+                .enqueue(new Callback<ResProfile>() {
+                    @Override
+                    public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {
+                        if (response.isSuccessful()) {
+                            callbackResponse.Success(response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResProfile> call, Throwable t) {
+                        callbackResponse.Error(t.getMessage());
+                    }
+                });
+    }
+
+    public static void confirm(CallbackResponse callbackResponse, String bodyConf) {
+        RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyConf);
+        APIClient.getClient(Config.URL).create(APIInterface.class)
+                .confirmOTP(requestBody)
+                .enqueue(new Callback<ResProfile>() {
+                    @Override
+                    public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {
+                        if (response.isSuccessful()) {
+                            callbackResponse.Success(response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResProfile> call, Throwable t) {
+                        callbackResponse.Error(t.getMessage());
+                    }
+                });
+    }
+
+    public static void resend(CallbackResponse callbackResponse,String username) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("username", username);
+        APIClient.getClient(Config.URL).create(APIInterface.class)
+                .resendOtp(hashMap)
                 .enqueue(new Callback<ResProfile>() {
                     @Override
                     public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {

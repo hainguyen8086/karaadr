@@ -1,9 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.MainMenu">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/x_action_bar">
+
+        <Button
+            android:id="@+id/nav"
+            android:layout_width="35dp"
+            android:layout_height="34dp"
+            android:background="@drawable/drop_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/white"
+            android:paddingHorizontal="10dp"
+            android:text="MAIN MENU"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+    <View
+
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@color/black"
+        android:elevation="5dp" />
+
+    <androidx.cardview.widget.CardView
+
+        android:id="@+id/card_filter"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@color/x_blue"
+        app:cardElevation="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp">
+
+            <ImageView
+                android:id="@+id/img_avt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/avt_dev" />
+
+            <TextView
+                android:id="@+id/tv_prf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_avt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="== PROFILE ==" />
+
+            <TextView
+                android:id="@+id/text_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_prf"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_dropdown"
+                android:drawableRight="@drawable/ic_arrow"
+                android:paddingHorizontal="14dp"
+                android:text="Information"
+                android:textColor="@color/white" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_info"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_info"
+                android:layout_centerHorizontal="true"
+                android:background="@color/x_blue"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/username"
+                        android:drawablePadding="5dp"
+                        android:text="txt_username" />
+
+                    <TextView
+                        android:id="@+id/txt_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_username"
+                        android:drawableLeft="@drawable/avt1"
+                        android:drawablePadding="5dp"
+                        android:text="txt_first_name" />
+
+                    <TextView
+                        android:id="@+id/txt_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_first_name"
+                        android:drawableLeft="@drawable/avt2"
+                        android:drawablePadding="5dp"
+                        android:text="txt_last_name" />
+
+                    <TextView
+                        android:id="@+id/txt_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_last_name"
+                        android:drawableLeft="@drawable/sex_16"
+                        android:drawablePadding="5dp"
+                        android:text="txt_gender" />
+
+                    <TextView
+                        android:id="@+id/txt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_gender"
+                        android:drawableLeft="@drawable/mail_16"
+                        android:drawablePadding="5dp"
+                        android:text="txt_email" />
+
+                    <TextView
+                        android:id="@+id/txt_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_email"
+                        android:drawableLeft="@drawable/setting_16"
+                        android:drawablePadding="5dp"
+                        android:text="txt_role" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/text_update_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_info"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_dropdown2"
+                android:drawableRight="@drawable/ic_arrow"
+                android:paddingHorizontal="14dp"
+                android:textColor="@color/white"
+                android:text="Update Info" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_update"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_update_info"
+                android:layout_centerHorizontal="true"
+                android:background="@color/x_blue"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:textSize="12dp"
+                        android:id="@+id/update_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/username"
+                        android:drawablePadding="5dp"
+                        android:text="txt_username" />
+
+                    <EditText
+                        android:textSize="12dp"
+                        android:id="@+id/update_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_username"
+                        android:drawableLeft="@drawable/avt1"
+                        android:drawablePadding="5dp"
+                        android:text="txt_first_name" />
+
+                    <EditText
+                        android:textSize="12dp"
+                        android:id="@+id/update_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_first_name"
+                        android:drawableLeft="@drawable/avt2"
+                        android:drawablePadding="5dp"
+                        android:text="txt_last_name" />
+
+                    <EditText
+                        android:textSize="12dp"
+                        android:id="@+id/update_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_last_name"
+                        android:drawableLeft="@drawable/sex_16"
+                        android:drawablePadding="5dp"
+                        android:text="txt_gender" />
+
+                    <EditText
+                        android:textSize="12dp"
+                        android:id="@+id/update_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_gender"
+                        android:drawableLeft="@drawable/mail_16"
+                        android:drawablePadding="5dp"
+                        android:text="txt_email" />
+
+                    <EditText
+                        android:id="@+id/update_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/update_email"
+                        android:drawableLeft="@drawable/setting_16"
+                        android:drawablePadding="5dp"
+                        android:textSize="12dp"
+                        android:text="txt_role" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

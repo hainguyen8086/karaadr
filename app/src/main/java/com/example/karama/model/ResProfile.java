@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class ResProfile {
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
     @SerializedName("timestamp")
     @Expose
     private String timestamp;
@@ -17,11 +17,11 @@ public class ResProfile {
     @Expose
     private DataProfile data;
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

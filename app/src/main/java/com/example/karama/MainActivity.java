@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,9 +18,11 @@ import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.Config;
 import com.example.karama.helper.UIHelper;
+import com.example.karama.model.ResProfile;
 import com.example.karama.model.ResToken;
 import com.example.karama.model.ResUser;
 import com.example.karama.services.APIServices;
+import com.example.karama.views.MainMenu;
 
 import retrofit2.Response;
 
@@ -35,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPrefManager.init(mContext);
         checkConnect();
         checkFirstInstall();
-        checkTokenInvalid();
         initView();
         initClick();
+//        checkTokenInvalid();
+        Intent intent = new Intent(MainActivity.this, MainMenu.class);
+        startActivity(intent);
     }
 
     private void checkTokenInvalid() {
@@ -45,7 +50,31 @@ public class MainActivity extends AppCompatActivity {
             Log.e("==pref_refreshToken:", "NOT NON");
             if (!SharedPrefManager.getAccessToken().equals("NON")) {
                 Log.e("==pref_accessToken:", "NOT NON");
+                //check token valid
+                loadingDialog.show();
+                APIServices.seeProfile(new CallbackResponse() {
+                    @Override
+                    public void Success(Response<?> response) {
+                        loadingDialog.cancel();
+                        ResProfile resProfile = (ResProfile) response.body();
+                        if (resProfile != null) {
+                            if (resProfile.getStatus().equals("200")) {
+                                //successs
+                                Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                                startActivity(intent);
+                            }
+                            if (resProfile.getStatus().equals("401")) {
+                                UIHelper.showAlertDialog(mContext, "ERROR 401", resProfile.getMessage(), R.drawable.ic_error);
+                            }
+                        }
+                    }
 
+                    @Override
+                    public void Error(String error) {
+                        loadingDialog.cancel();
+                        UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.ic_error);
+                    }
+                });
             }
         }
     }
@@ -129,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("==rfToken:", resToken.getData().getRefreshToken());
                     SharedPrefManager.setAccessToken(resToken.getData().getAccessToken());
                     SharedPrefManager.setRefreshToken(resToken.getData().getRefreshToken());
+                    Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                    startActivity(intent);
                 }
             }
 
