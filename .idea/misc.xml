@@ -8,8 +8,10 @@
         <entry key="app/src/main/res/drawable/btn_login.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_pressed.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/btn_login.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/dialog_item_load.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/dialog_sign_in.xml" value="0.25" />
       </map>
     </option>
   </component>

@@ -3,15 +3,19 @@ package com.example.karama.services;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.APIHelper;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.Config;
+import com.example.karama.model.ResProfile;
 import com.example.karama.model.ResToken;
 import com.example.karama.model.ResTokenRefresh;
 import com.example.karama.model.ResUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.URLClassLoader;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -92,7 +96,7 @@ public class APIServices {
     }
     public static void getAccessToken(CallbackResponse callbackResponse,String token) {
         APIClient.getClient(Config.URL).create(APIInterface.class)
-                .getRefreshToken(APIHelper.API_HEADER(""))
+                .getRefreshToken(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()))
                 .enqueue(new Callback<ResTokenRefresh>() {
                     @Override
                     public void onResponse(Call<ResTokenRefresh> call, Response<ResTokenRefresh> response) {
@@ -103,6 +107,43 @@ public class APIServices {
 
                     @Override
                     public void onFailure(Call<ResTokenRefresh> call, Throwable t) {
+                        callbackResponse.Error(t.getMessage());
+                    }
+                });
+    }
+//if token het han, show dialog v3 -> login
+    public static void seeProfile(CallbackResponse callbackResponse) {
+        APIClient.getClient(Config.URL).create(APIInterface.class)
+                .getProfile(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()))
+                .enqueue(new Callback<ResProfile>() {
+                    @Override
+                    public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {
+                        if (response.isSuccessful()) {
+                            callbackResponse.Success(response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResProfile> call, Throwable t) {
+                        callbackResponse.Error(t.getMessage());
+                    }
+                });
+    }
+
+    public static void editProfile(CallbackResponse callbackResponse, String bodyUpdate) {
+        RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyUpdate);
+        APIClient.getClient(Config.URL).create(APIInterface.class)
+                .updateProfile(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()),requestBody)
+                .enqueue(new Callback<ResProfile>() {
+                    @Override
+                    public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {
+                        if (response.isSuccessful()) {
+                            callbackResponse.Success(response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResProfile> call, Throwable t) {
                         callbackResponse.Error(t.getMessage());
                     }
                 });

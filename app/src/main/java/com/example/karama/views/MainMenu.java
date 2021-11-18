@@ -1,4 +1,4 @@
-package com.example.karama.screen;
+package com.example.karama.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 

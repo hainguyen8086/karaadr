@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkTokenInvalid() {
         if (!SharedPrefManager.getRefreshToken().equals("NON")) {
+            Log.e("==pref_refreshToken:", "NOT NON");
             if (!SharedPrefManager.getAccessToken().equals("NON")) {
+                Log.e("==pref_accessToken:", "NOT NON");
 
             }
         }
@@ -125,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 if (resToken != null) {
                     Log.e("==acToken:", resToken.getData().getAccessToken());
                     Log.e("==rfToken:", resToken.getData().getRefreshToken());
+                    SharedPrefManager.setAccessToken(resToken.getData().getAccessToken());
+                    SharedPrefManager.setRefreshToken(resToken.getData().getRefreshToken());
                 }
             }
 
@@ -143,5 +147,7 @@ public class MainActivity extends AppCompatActivity {
         txt_pass = findViewById(R.id.txt_pass);
         btn_login = findViewById(R.id.btn_login);
         btn_signin = findViewById(R.id.btn_signin);
+        Log.e("==cre_acTken:", SharedPrefManager.getAccessToken());
+        Log.e("==cre_rfTken:", SharedPrefManager.getRefreshToken());
     }
 }
