@@ -3,17 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/border_button_white.xml" value="0.20885416666666667" />
+        <entry key="app/src/main/res/drawable/border_dialog_2.xml" value="0.20885416666666667" />
+        <entry key="app/src/main/res/drawable/border_edt.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable/btn_disable.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_focused.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_login.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_pressed.xml" value="0.10520833333333333" />
-        <entry key="app/src/main/res/drawable/text_dropdown.xml" value="0.3619791666666667" />
-        <entry key="app/src/main/res/drawable/text_dropdown2.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/non_background.xml" value="0.15729166666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.33" />
         <entry key="app/src/main/res/layout/btn_login.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/custom_dialog_confirm_otp.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/dialog_item_load.xml" value="0.19270833333333334" />
-        <entry key="app/src/main/res/layout/dialog_sign_in.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_sign_in.xml" value="0.22" />
       </map>
     </option>
   </component>

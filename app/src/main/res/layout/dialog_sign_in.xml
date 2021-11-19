@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/border_button_white"
     android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_close_35" />
 
     <TextView
         android:id="@+id/tvuser"
@@ -39,18 +50,20 @@
         android:layout_below="@+id/tvpass"
         android:layout_marginHorizontal="20dp"
         android:drawableLeft="@drawable/icon_padlock_x24"
+        android:drawableRight="@drawable/ic_sharingan"
         android:fontFamily="monospace"
         android:inputType="textPassword"
         android:textSize="16dp" />
+
     <TextView
-        android:layout_below="@+id/txt_pass"
         android:id="@+id/tvcfpass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm Password:"
+        android:layout_below="@+id/txt_pass"
+        android:layout_marginHorizontal="20dp"
         android:fontFamily="monospace"
-        android:textSize="16dp"
-        android:layout_marginHorizontal="20dp" />
+        android:text="Confirm Password:"
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/txt_cf_pass"
@@ -59,6 +72,7 @@
         android:layout_below="@+id/tvcfpass"
         android:layout_marginHorizontal="20dp"
         android:drawableLeft="@drawable/icon_padlock_x24"
+        android:drawableRight="@drawable/ic_sharingan"
         android:fontFamily="monospace"
         android:inputType="textPassword"
         android:textSize="16dp" />
@@ -103,14 +117,33 @@
         android:textSize="16dp" />
 
     <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txt_last_name"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="monospace"
+        android:text="Sex :"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/txt_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_sex"
+        android:layout_marginHorizontal="20dp"
+        android:drawableLeft="@drawable/sex_16"
+        android:fontFamily="monospace"
+        android:textSize="16dp" />
+    <TextView
         android:id="@+id/tv_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email :"
+        android:layout_below="@+id/txt_sex"
+        android:layout_marginHorizontal="20dp"
         android:fontFamily="monospace"
-        android:textSize="16dp"
-        android:layout_marginHorizontal="20dp" />
+        android:text="Email :"
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/txt_mail"

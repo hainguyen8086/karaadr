@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.karama.MainActivity;
 import com.example.karama.R;
 import com.example.karama.helper.CallbackResponse;
+import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UHelper;
 import com.example.karama.helper.UIHelper;
 import com.example.karama.model.ResProfile;
@@ -28,6 +29,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     View view;
     CardView card_filter,card_info;
     TextView text_info,txt_username,txt_first_name,txt_last_name,txt_gender,txt_email, txt_role;
+
 
 
     @Override
@@ -58,7 +60,17 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         txt_role.setText(UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()));
                     }
                     if (resProfile.getStatus().equals("401")) {
-                        UIHelper.showAlertDialog(mContext, "ERROR 401", resProfile.getMessage(), R.drawable.ic_error);
+                        UIHelper.showAlertDialogV3(mContext, "ERROR 401", resProfile.getMessage(), R.drawable.ic_error, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                // set the new task and clear flags
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+
+
                     }
                 }
             }

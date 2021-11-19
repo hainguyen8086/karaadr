@@ -209,25 +209,15 @@
                         android:drawablePadding="5dp"
                         android:text="txt_gender" />
 
-                    <EditText
-                        android:textSize="12dp"
-                        android:id="@+id/update_email"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="UPDATE"
                         android:layout_below="@+id/update_gender"
-                        android:drawableLeft="@drawable/mail_16"
-                        android:drawablePadding="5dp"
-                        android:text="txt_email" />
-
-                    <EditText
-                        android:id="@+id/update_role"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/update_email"
-                        android:drawableLeft="@drawable/setting_16"
-                        android:drawablePadding="5dp"
-                        android:textSize="12dp"
-                        android:text="txt_role" />
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/border_button_white"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>

@@ -22,6 +22,8 @@ import com.example.karama.model.ResProfile;
 import com.example.karama.model.ResToken;
 import com.example.karama.model.ResUser;
 import com.example.karama.services.APIServices;
+import com.example.karama.views.DialogConfirmOtp;
+import com.example.karama.views.DialogRegis;
 import com.example.karama.views.MainMenu;
 
 import retrofit2.Response;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_login, btn_signin;
     public Context mContext =this;
     public static Dialog loadingDialog;
+    private static MainActivity instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +43,16 @@ public class MainActivity extends AppCompatActivity {
         checkFirstInstall();
         initView();
         initClick();
-//        checkTokenInvalid();
-        Intent intent = new Intent(MainActivity.this, MainMenu.class);
-        startActivity(intent);
+        checkTokenInvalid();
+//        Intent intent = new Intent(MainActivity.this, MainMenu.class);
+//        startActivity(intent);
+    }
+
+    public static MainActivity getManagerInstance(){
+        if (instance == null) {
+            instance = new MainActivity();
+        }
+        return instance;
     }
 
     private void checkTokenInvalid() {
@@ -116,7 +126,10 @@ public class MainActivity extends AppCompatActivity {
         btn_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkExam("00096");
+//                checkExam("00096");
+                DialogRegis dialogRegis = new DialogRegis(MainActivity.this);
+                dialogRegis.setCanceledOnTouchOutside(false);
+                dialogRegis.show();
             }
         });
     }
@@ -172,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        instance = this;
         Log.e("==url", Config.URL);
         loadingDialog = UIHelper.setShowProgressBar(mContext);
         txt_username = findViewById(R.id.txt_username);
@@ -180,5 +194,11 @@ public class MainActivity extends AppCompatActivity {
         btn_signin = findViewById(R.id.btn_signin);
         Log.e("==cre_acTken:", SharedPrefManager.getAccessToken());
         Log.e("==cre_rfTken:", SharedPrefManager.getRefreshToken());
+    }
+
+    public void dialogOTP(String user) {
+        DialogConfirmOtp dialogConfirmOtp = new DialogConfirmOtp(MainActivity.this,user);
+        dialogConfirmOtp.setCanceledOnTouchOutside(false);
+        dialogConfirmOtp.show();
     }
 }
