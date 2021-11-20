@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 public class DialogRegis extends Dialog {
@@ -159,6 +160,7 @@ public class DialogRegis extends Dialog {
 
 
             pd.show();
+            Log.e("==callRegis", "here");
             APIServices.regis(new CallbackResponse() {
                 @Override
                 public void Success(Response<?> response) {
@@ -179,6 +181,9 @@ public class DialogRegis extends Dialog {
                         }
 
                     }
+                    ResponseBody resRegisErr = response.errorBody();
+//                    ResProfile resRegisErr = (ResProfile) response.errorBody();
+
                 }
 
                 @Override

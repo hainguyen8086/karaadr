@@ -11,6 +11,7 @@ import com.example.karama.model.ResProfile;
 import com.example.karama.model.ResToken;
 import com.example.karama.model.ResTokenRefresh;
 import com.example.karama.model.ResUser;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -159,6 +160,17 @@ public class APIServices {
                     public void onResponse(Call<ResProfile> call, Response<ResProfile> response) {
                         if (response.isSuccessful()) {
                             callbackResponse.Success(response);
+                        } else {
+                            if (response.code() == 400) {
+                                try {
+                                    Gson gson = new Gson();
+                                    ResProfile errorResponse = gson.fromJson(response.errorBody().charStream(), ResProfile.class);
+                                    callbackResponse.Error("Code: " + response.code() + "\nMessage: " + errorResponse.getMessage());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    callbackResponse.Error("Code: " + response.code() + " Message: " + response.message());
+                                }
+                            }
                         }
                     }
 

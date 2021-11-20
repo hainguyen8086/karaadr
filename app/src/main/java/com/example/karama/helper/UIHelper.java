@@ -61,5 +61,27 @@ public class UIHelper {
             }
         }
     }
+    public static void showAlertDialogConfirm(Context context, String title, String message, int iconResId, IInterfaceModel.OnBackIInterface onBackIInterface ) {
+        if (context != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(title);
+            builder.setMessage(message);
+            builder.setIcon(iconResId);
+            builder.setCancelable(true);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    onBackIInterface.onSuccess();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            try {
+                dialog.show();
+            } catch (WindowManager.BadTokenException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

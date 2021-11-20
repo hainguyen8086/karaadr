@@ -146,6 +146,7 @@
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/text_update_info"
                 android:layout_width="match_parent"
@@ -155,8 +156,8 @@
                 android:background="@drawable/text_dropdown2"
                 android:drawableRight="@drawable/ic_arrow"
                 android:paddingHorizontal="14dp"
-                android:textColor="@color/white"
-                android:text="Update Info" />
+                android:text="Update Info"
+                android:textColor="@color/white" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_update"
                 android:layout_width="240dp"
@@ -170,24 +171,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:textSize="12dp"
-                        android:id="@+id/update_username"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/username"
-                        android:drawablePadding="5dp"
-                        android:text="txt_username" />
 
                     <EditText
-                        android:textSize="12dp"
                         android:id="@+id/update_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/update_username"
                         android:drawableLeft="@drawable/avt1"
                         android:drawablePadding="5dp"
-                        android:text="txt_first_name" />
+                        android:text="txt_first_name"
+                        android:textSize="12dp" />
 
                     <EditText
                         android:textSize="12dp"
@@ -210,17 +202,30 @@
                         android:text="txt_gender" />
 
                     <Button
+                        android:id="@+id/btn_update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UPDATE"
                         android:layout_below="@+id/update_gender"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/border_button_white"
+                        android:text="UPDATE"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:layout_below="@+id/card_update"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_arrow"
+                android:text="LOG OUT" />
 
 
         </RelativeLayout>

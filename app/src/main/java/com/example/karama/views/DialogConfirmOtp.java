@@ -22,6 +22,8 @@ import com.example.karama.services.APIServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import retrofit2.Response;
 
 public class DialogConfirmOtp extends Dialog implements View.OnClickListener {
@@ -31,7 +33,7 @@ public class DialogConfirmOtp extends Dialog implements View.OnClickListener {
     EditText edt_otp;
     TextView tv_mess;
     String username;
-    ProgressDialog loadingCongfirm;
+    ProgressDialog loadingCongfirm,dialogResend;
     public DialogConfirmOtp(Activity context,String username) {
         super(context);
         this.activity = context;
@@ -49,7 +51,9 @@ public class DialogConfirmOtp extends Dialog implements View.OnClickListener {
         edt_otp = findViewById(R.id.edt_otp);
         tv_mess = findViewById(R.id.tv_mess);
         loadingCongfirm = new ProgressDialog(activity);
+        dialogResend = new ProgressDialog(activity);
         loadingCongfirm.setMessage("Đang xác thực OTP _");
+        dialogResend.setMessage("Đang gửi lại OTP");
         initClick();
     }
 
@@ -68,6 +72,8 @@ public class DialogConfirmOtp extends Dialog implements View.OnClickListener {
             case R.id.btn_resend_otp:
                 Log.e("==click", "resend_otp");
                 //call api resend 
+                resendOTP();
+                
                 break;
             case R.id.btn_confirm:
                 Log.e("==click:", "confirm_otp");
@@ -80,6 +86,33 @@ public class DialogConfirmOtp extends Dialog implements View.OnClickListener {
                 break;
 
         }
+    }
+
+    private void resendOTP() {
+//        HashMap<String, String> hashMap = new HashMap<>();
+//        hashMap.put("username", username);
+        dialogResend.show();
+        APIServices.resend(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                dialogResend.cancel();
+                ResProfile resProfile = (ResProfile) response.body();
+                if (resProfile != null) {
+                    if (resProfile.getStatus().equals("200")) {
+                        UIHelper.showAlertDialog(activity, "SUCCESS", resProfile.getMessage(), R.drawable.ic_success_35);
+                    } else {
+                        UIHelper.showAlertDialog(activity,"FAILURE",resProfile.getMessage(),R.drawable.bad_face_35);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                dialogResend.cancel();
+                UIHelper.showAlertDialog(activity,"ERROR",error,R.drawable.ic_err_35);
+
+            }
+        },username);
     }
 
     private void confirm(String otp) {
