@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MemberActivity">
+
+    <ImageView
+        android:id="@+id/view_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:src="@drawable/exit2_35" />
+
+    <TextView
+        android:id="@+id/bar_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_toEndOf="@+id/view_exit"
+        android:background="@drawable/square_button_white"
+        android:drawableRight="@drawable/member_35"
+        android:gravity="center"
+        android:padding="5dp"
+        android:paddingHorizontal="10dp"
+        android:text="Customer"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/add_customer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar_customer"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border_button_white"
+        android:drawableTop="@drawable/adduser_64"
+        android:paddingHorizontal="10dp"
+        android:text="ADD Customer"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/sdt_input"
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/phone_24"
+        android:layout_below="@+id/bar_customer"
+        android:layout_toEndOf="@+id/add_customer"
+        android:background="@drawable/rounded_edittext"
+        android:paddingHorizontal="10dp"
+        android:hint="Number Phone Customer"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/id_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sdt_input"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/add_customer"
+        android:background="@drawable/rounded_edittext"
+        android:drawableLeft="@drawable/id_24"
+        android:hint="ID User"
+        android:paddingHorizontal="10dp"
+        android:textSize="14dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/id_input"
+        android:layout_alignBottom="@+id/id_input"
+        android:layout_marginHorizontal="10dp"
+        android:src="@drawable/search_35" />
+
+    <TextView
+        android:id="@+id/textlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_customer"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/square_button_white"
+        android:drawableRight="@drawable/down2_24"
+        android:text="List of Customer"
+        android:textSize="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_customer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textlist"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/square_button_white" />
+
+
+
+
+
+
+
+
+</RelativeLayout>

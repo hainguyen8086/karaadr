@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Karama">
         <activity
+            android:name=".views.BookingRoom"
+            android:exported="false" />
+        <activity
+            android:name=".MemberActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.MainMenu"
             android:exported="false" />
         <activity

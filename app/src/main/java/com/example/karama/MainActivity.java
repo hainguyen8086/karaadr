@@ -16,12 +16,14 @@ import android.widget.Toast;
 
 import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.CallbackResponse;
-import com.example.karama.helper.Config;
+import com.example.karama.helper.UrlConfig;
 import com.example.karama.helper.UIHelper;
+import com.example.karama.model.Res4AddStaff;
+import com.example.karama.model.ResProducts;
 import com.example.karama.model.ResProfile;
 import com.example.karama.model.ResToken;
-import com.example.karama.model.ResUser;
 import com.example.karama.services.APIServices;
+import com.example.karama.services.KaraServices;
 import com.example.karama.views.DialogConfirmOtp;
 import com.example.karama.views.DialogRegis;
 import com.example.karama.views.MainMenu;
@@ -62,19 +64,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("==pref_accessToken:", "NOT NON");
                 //check token valid
                 loadingDialog.show();
-                APIServices.seeProfile(new CallbackResponse() {
+                KaraServices.checkToken(mContext, new CallbackResponse() {
                     @Override
                     public void Success(Response<?> response) {
                         loadingDialog.cancel();
-                        ResProfile resProfile = (ResProfile) response.body();
-                        if (resProfile != null) {
-                            if (resProfile.getStatus().equals("200")) {
-                                //successs
+                        ResProducts resProducts = (ResProducts) response.body();
+                        if (resProducts != null) {
+                            if (resProducts.getStatus().equals("200")) {
                                 Intent intent = new Intent(MainActivity.this, MainMenu.class);
                                 startActivity(intent);
-                            }
-                            if (resProfile.getStatus().equals("401")) {
-                                UIHelper.showAlertDialog(mContext, "ERROR 401", resProfile.getMessage(), R.drawable.ic_error);
+                            } else {
+
                             }
                         }
                     }
@@ -82,9 +82,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void Error(String error) {
                         loadingDialog.cancel();
-                        UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.ic_error);
+                        UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.amazing_64);
+
                     }
-                });
+                },"0","30","ASC");
             }
         }
     }
@@ -123,31 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        btn_signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                checkExam("00096");
-                DialogRegis dialogRegis = new DialogRegis(MainActivity.this);
-                dialogRegis.setCanceledOnTouchOutside(false);
-                dialogRegis.show();
-            }
-        });
     }
 
-    private void checkExam(String employ) {
-        APIServices.checkExam(mContext, new CallbackResponse() {
-            @Override
-            public void Success(Response<?> response) {
-                String res = (String) response.body();
-                Log.e("==resExam:", res);
-            }
-
-            @Override
-            public void Error(String error) {
-                Log.e("==resExam:", error);
-            }
-        },employ);
-    }
     public boolean isNetwork(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context
@@ -161,32 +139,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void getToken(String username, String password) {
         loadingDialog.show();
-        APIServices.getAccessRefreshToken(new CallbackResponse() {
+        KaraServices.getAccessRefreshToken(new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
                 loadingDialog.cancel();
                 ResToken resToken = (ResToken) response.body();
                 if (resToken != null) {
-                    Log.e("==acToken:", resToken.getData().getAccessToken());
-                    Log.e("==rfToken:", resToken.getData().getRefreshToken());
-                    SharedPrefManager.setAccessToken(resToken.getData().getAccessToken());
-                    SharedPrefManager.setRefreshToken(resToken.getData().getRefreshToken());
-                    Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                    startActivity(intent);
+                    if (resToken.getStatus().equals("200")) {
+                        Log.e("==acToken:", resToken.getData().getAccessToken());
+                        Log.e("==rfToken:", resToken.getData().getRefreshToken());
+                        SharedPrefManager.setAccessToken(resToken.getData().getAccessToken());
+                        SharedPrefManager.setRefreshToken(resToken.getData().getRefreshToken());
+                        SharedPrefManager.setUsername(username);
+                        Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                        startActivity(intent);
+                    } else {
+                        UIHelper.showAlertDialog(mContext, resToken.getStatus(), resToken.getMessage(),R.drawable.troll_64);
+                    }
                 }
             }
 
             @Override
             public void Error(String error) {
                 loadingDialog.cancel();
-                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.ic_error);
+                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.amazing_64);
+
             }
         },username,password);
+
     }
 
     private void initView() {
         instance = this;
-        Log.e("==url", Config.URL);
+        Log.e("==url", UrlConfig.URL);
         loadingDialog = UIHelper.setShowProgressBar(mContext);
         txt_username = findViewById(R.id.txt_username);
         txt_pass = findViewById(R.id.txt_pass);

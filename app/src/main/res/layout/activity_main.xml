@@ -38,11 +38,12 @@
 
     <EditText
         android:id="@+id/txt_pass"
-        android:drawableLeft="@drawable/icon_padlock_x24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvpass"
         android:layout_marginHorizontal="20dp"
+        android:drawableLeft="@drawable/icon_padlock_x24"
+        android:inputType="textPassword"
         android:fontFamily="monospace"
         android:textSize="16dp" />
 
@@ -57,22 +58,24 @@
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_login"
-            android:text="LOG IN"
+            android:background="@drawable/login_35_v2"
+
             android:textColor="@color/white"
 
             android:textStyle="bold" />
+
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_signin"
-            android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_toEndOf="@+id/btn_login"
+            android:background="@drawable/btn_focused"
             android:text="SIGN IN"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/btn_login"
 
-            android:background="@drawable/btn_focused" />
+            android:textStyle="bold" />
     </RelativeLayout>
 
 

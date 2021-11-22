@@ -8,13 +8,29 @@
         <entry key="app/src/main/res/drawable/btn_focused.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_login.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_pressed.xml" value="0.10520833333333333" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/drawable/rounded_edittext.xml" value="0.26666666666666666" />
+        <entry key="app/src/main/res/drawable/square_button_white.xml" value="0.3619791666666667" />
         <entry key="app/src/main/res/drawable/text_dropdown.xml" value="0.3619791666666667" />
         <entry key="app/src/main/res/drawable/text_dropdown2.xml" value="0.3072916666666667" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.5163297045101088" />
+        <entry key="app/src/main/res/drawable/text_dropdown3.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_member.xml" value="0.3458333333333333" />
         <entry key="app/src/main/res/layout/btn_login.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/card_list_customer.xml" value="0.3458333333333333" />
+        <entry key="app/src/main/res/layout/card_member.xml" value="0.3458333333333333" />
+        <entry key="app/src/main/res/layout/card_staff.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/custom_dialog_confirm_otp.xml" value="0.3458333333333333" />
+        <entry key="app/src/main/res/layout/dialog_add_customer.xml" value="0.3458333333333333" />
+        <entry key="app/src/main/res/layout/dialog_add_staff.xml" value="0.3458333333333333" />
         <entry key="app/src/main/res/layout/dialog_item_load.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/dialog_sign_in.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_staff.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/navigation.xml" value="0.3458333333333333" />
+        <entry key="app/src/main/res/menu/navigation.xml" value="0.3458333333333333" />
       </map>
     </option>
   </component>

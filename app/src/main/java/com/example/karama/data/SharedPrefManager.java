@@ -30,6 +30,10 @@ public class SharedPrefManager {
     public static void setRefreshToken(String refreshToken) {
         SharedPrefManager.getInstance().mySharePreferences.putStringValue(KeyPem.SHARED_REFRESH_TOKEN,refreshToken);
     }
+    public static void setUsername(String username) {
+        SharedPrefManager.getInstance().mySharePreferences.putStringValue(KeyPem.SHARED_USERNAME,username);
+    }
+
 //  get share preferencea
     public static boolean getFirstInstall(){
         return SharedPrefManager.getInstance().mySharePreferences.getBooleanValue(KeyPem.PREF_FIRST_INSTALL);
@@ -41,6 +45,10 @@ public class SharedPrefManager {
     public static String getRefreshToken() {
         return SharedPrefManager.getInstance().mySharePreferences.getStringValue(KeyPem.SHARED_REFRESH_TOKEN);
     }
+    public static String getUsername() {
+        return SharedPrefManager.getInstance().mySharePreferences.getStringValue(KeyPem.SHARED_USERNAME);
+    }
+
 
 
 

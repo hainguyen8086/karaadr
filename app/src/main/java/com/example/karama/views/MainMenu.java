@@ -2,28 +2,45 @@ package com.example.karama.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.karama.MainActivity;
+import com.example.karama.MemberActivity;
 import com.example.karama.R;
+import com.example.karama.adapter.StaffAdapter;
 import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UHelper;
 import com.example.karama.helper.UIHelper;
+import com.example.karama.model.Res3ListStaff;
+import com.example.karama.model.Res4AddStaff;
+import com.example.karama.model.ResNullData;
 import com.example.karama.model.ResProfile;
-import com.example.karama.services.APIServices;
+import com.example.karama.model.Staff;
+import com.example.karama.services.KaraServices;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -33,9 +50,16 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     Button nav,btn_update,btn_logout;
     View view;
     CardView card_filter,card_info,card_update;
-    TextView text_info,text_update_info,txt_username,txt_first_name,txt_last_name,txt_gender,txt_email, txt_role;
-    TextView update_username,update_first_name,update_last_name, update_gender;
-    ProgressDialog dialogUpdate;
+    TextView text_info,text_update_info,txt_username,txt_first_name,txt_last_name,txt_gender,txt_email, txt_sdt,txt_adress1,txt_adress2,tv_role;
+    TextView update_username, update_email, update_sdt, update_gender,update_adres1,update_adres2,text_qlnv,tv_adduser;
+    ProgressDialog dialogUpdate,dialogGetProfile,loadingGetStaff,loadingChangepass,loadingAddUser;
+    ImageView img_ketoan,img_manager, img_employee;
+    RecyclerView rcv_staff;
+    StaffAdapter staffAdapter;
+    List<Staff> staffList;
+    TextView nav_customer;
+    private String m_newpass = "";
+    private static MainMenu instance;
 
 
     @Override
@@ -48,12 +72,19 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         getProfile();
     }
 
+    public static MainMenu getInstance() {
+        if (instance == null) {
+            instance = new MainMenu();
+        }
+        return instance;
+    }
+
     private void getProfile() {
-        loadingDialog.show();
-        APIServices.seeProfile(new CallbackResponse() {
+        dialogGetProfile.show();
+        KaraServices.seeProfile(mContext, new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
-                loadingDialog.cancel();
+                dialogGetProfile.cancel();
                 ResProfile resProfile = (ResProfile) response.body();
                 if (resProfile != null) {
                     if (resProfile.getStatus().equals("200")) {
@@ -63,36 +94,61 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         txt_last_name.setText(UHelper.getNullorEmptyV2(resProfile.getData().getLastName()));
                         txt_gender.setText(UHelper.getNullorEmptyV2(resProfile.getData().getGender()));
                         txt_email.setText(UHelper.getNullorEmptyV2(resProfile.getData().getEmail()));
-                        txt_role.setText(UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()));
+                        txt_sdt.setText(UHelper.getNullorEmptyV2(resProfile.getData().getPhoneNumber()));
+                        txt_adress1.setText(UHelper.getNullorEmptyV2(resProfile.getData().getAddress1()));
+                        txt_adress2.setText(UHelper.getNullorEmptyV2(resProfile.getData().getAddress2()));
+                        tv_role.setText(UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()));
 
-                        update_first_name.setText(UHelper.getNullorEmptyV2(resProfile.getData().getFirstName()));
-                        update_last_name.setText(UHelper.getNullorEmptyV2(resProfile.getData().getLastName()));
+                        update_email.setText(UHelper.getNullorEmptyV2(resProfile.getData().getEmail()));
+                        update_sdt.setText(UHelper.getNullorEmptyV2(resProfile.getData().getPhoneNumber()));
                         update_gender.setText(UHelper.getNullorEmptyV2(resProfile.getData().getGender()));
+                        update_adres1.setText(UHelper.getNullorEmptyV2(resProfile.getData().getAddress1()));
+                        update_adres2.setText(UHelper.getNullorEmptyV2(resProfile.getData().getAddress2()));
+                        tv_role.setText(UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()));
+                        if (UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()).equals("MANAGER")) {
+                            img_manager.setVisibility(View.VISIBLE);
+                            img_ketoan.setVisibility(View.GONE);
+                            img_employee.setVisibility(View.GONE);
+                            text_qlnv.setVisibility(View.VISIBLE);
+                        }
+                        if (UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()).equals("STAFF")) {
+                            img_manager.setVisibility(View.GONE);
+                            img_ketoan.setVisibility(View.GONE);
+                            img_employee.setVisibility(View.VISIBLE);
+                            text_qlnv.setVisibility(View.GONE);
+
+                        }
+                        if (UHelper.getNullorEmptyV2(resProfile.getData().getRoleCodeName()).equals("ACCOUNTANT")) {
+                            img_manager.setVisibility(View.GONE);
+                            img_ketoan.setVisibility(View.VISIBLE);
+                            img_employee.setVisibility(View.GONE);
+                            text_qlnv.setVisibility(View.GONE);
+                        }
 
 
-                    }
-                    if (resProfile.getStatus().equals("401")) {
-                        UIHelper.showAlertDialogV3(mContext, "ERROR 401", resProfile.getMessage(), R.drawable.ic_error, new IInterfaceModel.OnBackIInterface() {
+                    } else if (resProfile.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(mContext, resProfile.getStatus(), resProfile.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
                                 Intent i = new Intent(MainMenu.this, MainActivity.class);
-                                // set the new task and clear flags
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
                             }
                         });
-
-
+                    } else{
+                        UIHelper.showAlertDialog(mContext,resProfile.getStatus(),resProfile.getMessage(),R.drawable.troll_64);
                     }
                 }
             }
 
             @Override
             public void Error(String error) {
-                loadingDialog.cancel();
-                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.ic_error);
+                dialogGetProfile.cancel();
+                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.amazing_64);
+
             }
-        });
+        },SharedPrefManager.getUsername());
+
     }
 
     private void setClick() {
@@ -104,12 +160,26 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         card_update.setOnClickListener(this);
         text_info.setOnClickListener(this);
         text_update_info.setOnClickListener(this);
+        text_qlnv.setOnClickListener(this);
+        tv_adduser.setOnClickListener(this);
+        nav_customer.setOnClickListener(this);
     }
 
     private void initView() {
+        instance = this;
         loadingDialog = UIHelper.setShowProgressBar(mContext);
+        dialogGetProfile = new ProgressDialog(mContext);
+        dialogGetProfile.setCancelable(false);
         dialogUpdate = new ProgressDialog(mContext);
         dialogUpdate.setMessage("Đang update thông tin");
+        loadingChangepass = new ProgressDialog(mContext);
+        loadingChangepass.setMessage("Đang cấp lại mật khẩu mới \n Vui lòng waitting ...");
+        loadingChangepass.setProgressDrawable(mContext.getDrawable(R.drawable.loading_64));
+        loadingAddUser = new ProgressDialog(mContext);
+        loadingAddUser.setMessage("Đang thêm User \n Vui lòng đợi");
+        loadingChangepass.setProgressDrawable(mContext.getDrawable(R.drawable.import_36));
+        loadingGetStaff = new ProgressDialog(mContext);
+        loadingGetStaff.setMessage("Getting List Staffs...!");
         nav = findViewById(R.id.nav);
         btn_update = findViewById(R.id.btn_update);
         btn_logout = findViewById(R.id.btn_logout);
@@ -127,24 +197,42 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         txt_last_name = findViewById(R.id.txt_last_name);
         txt_gender = findViewById(R.id.txt_gender);
         txt_email = findViewById(R.id.txt_email);
-        txt_role = findViewById(R.id.txt_role);
+        txt_sdt = findViewById(R.id.txt_sdt);
+        txt_adress1 = findViewById(R.id.txt_adress1);
+        txt_adress2 = findViewById(R.id.txt_adress2);
+        tv_role = findViewById(R.id.tv_role);
         text_info = findViewById(R.id.text_info);
+        text_qlnv = findViewById(R.id.text_qlnv);
         text_update_info = findViewById(R.id.text_update_info);
-        update_first_name = findViewById(R.id.update_first_name);
+        update_email = findViewById(R.id.update_email);
         update_gender = findViewById(R.id.update_gender);
-        update_last_name = findViewById(R.id.update_last_name);
+        update_sdt = findViewById(R.id.update_sdt);
+        update_adres1 = findViewById(R.id.update_adres1);
+        update_adres2 = findViewById(R.id.update_adres2);
+        img_ketoan = findViewById(R.id.img_ketoan);
+        img_manager = findViewById(R.id.img_manager);
+        img_employee = findViewById(R.id.img_employee);
+        tv_adduser = findViewById(R.id.tv_adduser);
+        tv_adduser.setVisibility(View.GONE);
+
+        rcv_staff = findViewById(R.id.rcv_staff);
+        nav_customer = findViewById(R.id.nav_customer);
+        rcv_staff.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        staffList = new ArrayList<>();
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav:
-                card_filter.setVisibility(View.VISIBLE);
                 view.setVisibility(View.VISIBLE);
+                card_filter.setVisibility(View.VISIBLE);
                 break;
             case R.id.view:
                 card_filter.setVisibility(View.GONE);
                 view.setVisibility(View.GONE);
+                rcv_staff.setVisibility(View.GONE);
                 break;
             case R.id.text_info:
                 if (card_info.isShown()) {
@@ -166,7 +254,74 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             case R.id.btn_logout:
                 logout();
                 break;
+            case R.id.card_filter:
+                Log.e("==lick:", "card_filter");
+                if (view.isShown()) {
+                    card_filter.setVisibility(View.VISIBLE);
+                }
+                break;
+            case R.id.text_qlnv:
+                if (rcv_staff.isShown()) {
+                    rcv_staff.setVisibility(View.GONE);
+                    tv_adduser.setVisibility(View.GONE);
+                } else {
+                    rcv_staff.setVisibility(View.VISIBLE);
+                    tv_adduser.setVisibility(View.VISIBLE);
+                    getStaff();
+                }
+                break;
+            case R.id.tv_adduser:
+                DialogAddStaff dlAddStaff = new DialogAddStaff(MainMenu.this);
+                dlAddStaff.setCanceledOnTouchOutside(false);
+                dlAddStaff.show();
+                break;
+            case R.id.nav_customer:
+                Intent intent = new Intent(MainMenu.this, MemberActivity.class);
+                startActivity(intent);
+                break;
+
         }
+    }
+
+    private void getStaff() {
+        loadingGetStaff.show();
+        KaraServices.getAllStaff(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                loadingGetStaff.cancel();
+                Res3ListStaff resGetStaff = (Res3ListStaff) response.body();
+                if (resGetStaff != null) {
+                    if (resGetStaff.getStatus().equals("200")) {
+                        staffList.clear();
+                        //xuli
+                        for (int i = 0; i <resGetStaff.getData().getData().size() ; i++) {
+                            Staff staff=resGetStaff.getData().getData().get(i);
+                            staffList.add(staff);
+                            staffAdapter = new StaffAdapter(mContext, staffList);
+                            rcv_staff.setAdapter(staffAdapter);
+                            staffAdapter.notifyDataSetChanged();
+                        }
+
+                    } else if (resGetStaff.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(mContext, resGetStaff.getStatus(), resGetStaff.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(mContext,resGetStaff.getStatus(),resGetStaff.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+
+            }
+        },"0","20","ASC");
     }
 
     private void logout() {
@@ -179,25 +334,28 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void updateInfo() {
-        String fname = update_first_name.getText().toString();
-        String lname = update_last_name.getText().toString();
+        String mail = update_email.getText().toString();
+        String sdt = update_sdt.getText().toString();
         String gend = update_gender.getText().toString();
+        String adres1 = update_adres1.getText().toString();
+        String adres2 = update_adres2.getText().toString();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("firstName", fname);
-            jsonObject.put("lastName", lname);
+            jsonObject.put("email", mail);
+            jsonObject.put("phoneNumber", sdt);
             jsonObject.put("gender", gend);
+            jsonObject.put("address1", adres1);
+            jsonObject.put("address2", adres2);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String req = jsonObject.toString();
         dialogUpdate.show();
-        APIServices.editProfile(new CallbackResponse() {
+        KaraServices.updateUser(new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
                 dialogUpdate.cancel();
-                ResProfile resUpdate = (ResProfile) response.body();
-
+                Res4AddStaff resUpdate = (Res4AddStaff) response.body();
                 if (resUpdate != null) {
                     if (resUpdate.getStatus().equals("200")) {
                         UIHelper.showAlertDialogConfirm(mContext, "SUCCESS", resUpdate.getMessage(), R.drawable.ic_success_35, new IInterfaceModel.OnBackIInterface() {
@@ -206,9 +364,17 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 getProfile();
                             }
                         });
-
-                    } else {
-                        UIHelper.showAlertDialog(mContext,"FAILURE",resUpdate.getMessage(),R.drawable.bad_face_35);
+                    } else if (resUpdate.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(mContext, resUpdate.getStatus(), resUpdate.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(mContext,resUpdate.getStatus(),resUpdate.getMessage(),R.drawable.troll_64);
                     }
                 }
             }
@@ -216,9 +382,120 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void Error(String error) {
                 dialogUpdate.cancel();
-                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.bad_face_35);
+                UIHelper.showAlertDialog(mContext,"FAILURE",error,R.drawable.amazing_64);
             }
         },req);
 
     }
+
+    public void dialogStaff(Staff staff) {
+        DialogStaff dialogStaff = new DialogStaff(MainMenu.this, staff);
+        dialogStaff.setCanceledOnTouchOutside(false);
+        dialogStaff.show();
+    }
+    public void dialogNewpass(String userChange){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("New password for "+userChange);
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_newpass = input.getText().toString();
+                Log.e("==newpass", m_newpass);
+                changePass(userChange, m_newpass);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void changePass(String userChange, String newpass) {
+        loadingChangepass.show();
+        KaraServices.renewPass(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                loadingChangepass.cancel();
+                ResNullData resRenew = (ResNullData) response.body();
+                if (resRenew != null) {
+                    if (resRenew.getStatus().equals("200")) {
+                        UIHelper.showAlertDialog(mContext,"SUCCESS",resRenew.getMessage(),R.drawable.ic_success_35);
+                    } else if (resRenew.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(mContext, resRenew.getStatus(), resRenew.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(mContext,resRenew.getStatus(),resRenew.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                loadingChangepass.cancel();
+                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.amazing_64);
+
+            }
+        },userChange,newpass);
+    }
+
+    public void addUser(String stringAddUser) {
+        loadingAddUser.show();
+        KaraServices.addUser(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                loadingAddUser.cancel();
+                Res4AddStaff res4AddStaff = (Res4AddStaff) response.body();
+                if (res4AddStaff != null) {
+                    if (res4AddStaff.getStatus().equals("200")) {
+                        UIHelper.showAlertDialogV3(mContext, "200", res4AddStaff.getMessage(), R.drawable.ic_success_35, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                getStaff();
+
+                            }
+                        });
+                    } else if (res4AddStaff.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(mContext, res4AddStaff.getStatus(), res4AddStaff.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(mContext,res4AddStaff.getStatus(),res4AddStaff.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                loadingAddUser.cancel();
+                UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.troll_64);
+
+            }
+        },stringAddUser);
+
+
+    }
+
 }

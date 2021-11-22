@@ -15,7 +15,7 @@ public class ResProfile {
     private String message;
     @SerializedName("data")
     @Expose
-    private DataProfile data;
+    private Staff data;
 
     public String getStatus() {
         return status;
@@ -41,11 +41,11 @@ public class ResProfile {
         this.message = message;
     }
 
-    public DataProfile getData() {
+    public Staff getData() {
         return data;
     }
 
-    public void setData(DataProfile data) {
+    public void setData(Staff data) {
         this.data = data;
     }
 }

@@ -6,7 +6,7 @@ import android.util.Log;
 import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.APIHelper;
 import com.example.karama.helper.CallbackResponse;
-import com.example.karama.helper.Config;
+import com.example.karama.helper.UrlConfig;
 import com.example.karama.model.ResProfile;
 import com.example.karama.model.ResToken;
 import com.example.karama.model.ResTokenRefresh;
@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URLClassLoader;
 import java.util.HashMap;
 
 import okhttp3.RequestBody;
@@ -35,7 +34,7 @@ public class APIServices {
         }
         Log.e("==prGetToken1:", jsonObject.toString());
         RequestBody requestBody = RequestBody.create(APIHelper.JSON, jsonObject.toString());
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .getToken(user,pass)
                 .enqueue(new Callback<ResToken>() {
                     @Override
@@ -62,7 +61,7 @@ public class APIServices {
         }
         Log.e("==prExam:", jsonObject.toString());
         RequestBody requestBody = RequestBody.create(APIHelper.JSON, jsonObject.toString());
-        APIClient.getClient(Config.URL_PHARMA).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL_PHARMA).create(APIInterface.class)
                 .checkExam(requestBody)
                 .enqueue(new Callback<String>() {
                     @Override
@@ -80,7 +79,7 @@ public class APIServices {
     }
 
     public static void getUser(CallbackResponse callbackResponse) {
-        APIClient.getClient(Config.URL_REQRES).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL_REQRES).create(APIInterface.class)
                 .getUser()
                 .enqueue(new Callback<ResUser>() {
                     @Override
@@ -97,7 +96,7 @@ public class APIServices {
                 });
     }
     public static void getAccessToken(CallbackResponse callbackResponse,String token) {
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .getRefreshToken(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()))
                 .enqueue(new Callback<ResTokenRefresh>() {
                     @Override
@@ -115,7 +114,7 @@ public class APIServices {
     }
 //if token het han, show dialog v3 -> login
     public static void seeProfile(CallbackResponse callbackResponse) {
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .getProfile(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()))
                 .enqueue(new Callback<ResProfile>() {
                     @Override
@@ -134,7 +133,7 @@ public class APIServices {
 
     public static void editProfile(CallbackResponse callbackResponse, String bodyUpdate) {
         RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyUpdate);
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .updateProfile(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()),requestBody)
                 .enqueue(new Callback<ResProfile>() {
                     @Override
@@ -153,7 +152,7 @@ public class APIServices {
 
     public static void regis(CallbackResponse callbackResponse, String bodyReg) {
         RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyReg);
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .regisUser(requestBody)
                 .enqueue(new Callback<ResProfile>() {
                     @Override
@@ -183,7 +182,7 @@ public class APIServices {
 
     public static void confirm(CallbackResponse callbackResponse, String bodyConf) {
         RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyConf);
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .confirmOTP(requestBody)
                 .enqueue(new Callback<ResProfile>() {
                     @Override
@@ -203,7 +202,7 @@ public class APIServices {
     public static void resend(CallbackResponse callbackResponse,String username) {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("username", username);
-        APIClient.getClient(Config.URL).create(APIInterface.class)
+        APIClient.getClient(UrlConfig.URL).create(APIInterface.class)
                 .resendOtp(hashMap)
                 .enqueue(new Callback<ResProfile>() {
                     @Override

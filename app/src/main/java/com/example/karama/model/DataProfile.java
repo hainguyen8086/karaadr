@@ -16,15 +16,24 @@ public class DataProfile {
     @SerializedName("gender")
     @Expose
     private String gender;
-    @SerializedName("status")
+    @SerializedName("address1")
     @Expose
-    private String status;
+    private String address1;
+    @SerializedName("address2")
+    @Expose
+    private String address2;
+    @SerializedName("phoneNumber")
+    @Expose
+    private String phoneNumber;
     @SerializedName("email")
     @Expose
     private String email;
     @SerializedName("roleCodeName")
     @Expose
     private String roleCodeName;
+    @SerializedName("status")
+    @Expose
+    private String status;
 
     public String getUsername() {
         return username;
@@ -58,12 +67,28 @@ public class DataProfile {
         this.gender = gender;
     }
 
-    public String getStatus() {
-        return status;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -80,5 +105,13 @@ public class DataProfile {
 
     public void setRoleCodeName(String roleCodeName) {
         this.roleCodeName = roleCodeName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
