@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class APIHelper {
     public static final Map<String, String> API_HEADER(String token) {
@@ -21,4 +22,9 @@ public class APIHelper {
         return null;
     }
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    public static RequestBody parseReq(String strReq) {
+        RequestBody requestBody = RequestBody.create(JSON, strReq);
+        return requestBody;
+    }
 }
