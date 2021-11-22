@@ -1,9 +1,9 @@
 package com.example.karama.services;
 
-import com.example.karama.model.ResProfile;
-import com.example.karama.model.ResToken;
-import com.example.karama.model.ResTokenRefresh;
-import com.example.karama.model.ResUser;
+import com.example.karama.model.person.ResProfile;
+import com.example.karama.model.auth.ResToken;
+import com.example.karama.model.auth.ResTokenRefresh;
+import com.example.karama.model.person.ResUser;
 
 import java.util.HashMap;
 import java.util.List;

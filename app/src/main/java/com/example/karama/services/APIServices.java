@@ -7,10 +7,10 @@ import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.APIHelper;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.UrlConfig;
-import com.example.karama.model.ResProfile;
-import com.example.karama.model.ResToken;
-import com.example.karama.model.ResTokenRefresh;
-import com.example.karama.model.ResUser;
+import com.example.karama.model.person.ResProfile;
+import com.example.karama.model.auth.ResToken;
+import com.example.karama.model.auth.ResTokenRefresh;
+import com.example.karama.model.person.ResUser;
 import com.google.gson.Gson;
 
 import org.json.JSONException;

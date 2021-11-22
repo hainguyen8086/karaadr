@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karama.MemberActivity;
 import com.example.karama.R;
-import com.example.karama.model.Customer;
+import com.example.karama.model.person.Customer;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Customer customer = customerList.get(position);
         holder.tv_id.setText(customer.getId());
-        holder.text_name.setText(customer.getFirstName()+customer.getLastName());
+        holder.text_name.setText(customer.getFirstName()+" "+customer.getLastName());
         holder.text_sdt.setText(customer.getPhoneNumber());
         if (customer.getGender().equals("MALE")) {
             holder.avt_customer.setImageDrawable(mContext.getDrawable(R.drawable.sing_boy35));

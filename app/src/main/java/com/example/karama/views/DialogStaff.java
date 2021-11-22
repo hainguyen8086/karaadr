@@ -2,7 +2,6 @@ package com.example.karama.views;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.karama.R;
-import com.example.karama.model.Staff;
+import com.example.karama.model.person.Staff;
 
 public class DialogStaff extends Dialog {
     public Activity activity;

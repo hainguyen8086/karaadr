@@ -16,13 +16,11 @@ import android.widget.Toast;
 import com.example.karama.R;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.UIHelper;
-import com.example.karama.model.ResProfile;
+import com.example.karama.model.person.ResProfile;
 import com.example.karama.services.APIServices;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import retrofit2.Response;
 

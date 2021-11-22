@@ -18,14 +18,10 @@ import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.UrlConfig;
 import com.example.karama.helper.UIHelper;
-import com.example.karama.model.Res4AddStaff;
-import com.example.karama.model.ResProducts;
-import com.example.karama.model.ResProfile;
-import com.example.karama.model.ResToken;
-import com.example.karama.services.APIServices;
+import com.example.karama.model.product.ResAllProducts;
+import com.example.karama.model.auth.ResToken;
 import com.example.karama.services.KaraServices;
 import com.example.karama.views.DialogConfirmOtp;
-import com.example.karama.views.DialogRegis;
 import com.example.karama.views.MainMenu;
 
 import retrofit2.Response;
@@ -68,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void Success(Response<?> response) {
                         loadingDialog.cancel();
-                        ResProducts resProducts = (ResProducts) response.body();
-                        if (resProducts != null) {
-                            if (resProducts.getStatus().equals("200")) {
+                        ResAllProducts resAllProducts = (ResAllProducts) response.body();
+                        if (resAllProducts != null) {
+                            if (resAllProducts.getStatus().equals("200")) {
                                 Intent intent = new Intent(MainActivity.this, MainMenu.class);
                                 startActivity(intent);
                             } else {
@@ -151,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         SharedPrefManager.setAccessToken(resToken.getData().getAccessToken());
                         SharedPrefManager.setRefreshToken(resToken.getData().getRefreshToken());
                         SharedPrefManager.setUsername(username);
+                        Log.e("==share_username:", SharedPrefManager.getUsername());
                         Intent intent = new Intent(MainActivity.this, MainMenu.class);
                         startActivity(intent);
                     } else {

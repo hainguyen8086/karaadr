@@ -1,29 +1,21 @@
-package com.example.karama.model;
+package com.example.karama.model.room;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResTokenRefresh {
-    @SerializedName("status")
-    @Expose
-    private Integer status;
+public class ResAddRoom {
     @SerializedName("timestamp")
     @Expose
     private String timestamp;
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("message")
     @Expose
     private String message;
     @SerializedName("data")
     @Expose
-    private DataTokenRefresh data;
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+    private ID data;
 
     public String getTimestamp() {
         return timestamp;
@@ -31,6 +23,14 @@ public class ResTokenRefresh {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getMessage() {
@@ -41,11 +41,21 @@ public class ResTokenRefresh {
         this.message = message;
     }
 
-    public DataTokenRefresh getData() {
+    public ID getData() {
         return data;
     }
 
-    public void setData(DataTokenRefresh data) {
+    public void setData(ID data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ResAddRoom{" +
+                "timestamp='" + timestamp + '\'' +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

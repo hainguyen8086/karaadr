@@ -1,14 +1,14 @@
-package com.example.karama.model;
+package com.example.karama.model.person;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class DataProducts {
+public class DataListCustomer {
     @SerializedName("data")
     @Expose
-    private List<Products> data = null;
+    private List<Customer> data = null;
     @SerializedName("currentPage")
     @Expose
     private String currentPage;
@@ -16,11 +16,11 @@ public class DataProducts {
     @Expose
     private String totalPages;
 
-    public List<Products> getData() {
+    public List<Customer> getData() {
         return data;
     }
 
-    public void setData(List<Products> data) {
+    public void setData(List<Customer> data) {
         this.data = data;
     }
 

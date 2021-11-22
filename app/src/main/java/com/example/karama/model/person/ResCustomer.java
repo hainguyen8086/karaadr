@@ -1,9 +1,9 @@
-package com.example.karama.model;
+package com.example.karama.model.person;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResProducts {
+public class ResCustomer {
     @SerializedName("timestamp")
     @Expose
     private String timestamp;
@@ -15,7 +15,7 @@ public class ResProducts {
     private String message;
     @SerializedName("data")
     @Expose
-    private DataProducts data;
+    private Customer data;
 
     public String getTimestamp() {
         return timestamp;
@@ -41,11 +41,21 @@ public class ResProducts {
         this.message = message;
     }
 
-    public DataProducts getData() {
+    public Customer getData() {
         return data;
     }
 
-    public void setData(DataProducts data) {
+    public void setData(Customer data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ResCustomer{" +
+                "timestamp='" + timestamp + '\'' +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.example.karama.model;
+package com.example.karama.model.person;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

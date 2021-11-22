@@ -1,7 +1,6 @@
 package com.example.karama.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karama.R;
-import com.example.karama.model.Staff;
+import com.example.karama.model.person.Staff;
 import com.example.karama.views.MainMenu;
 
 import java.util.List;

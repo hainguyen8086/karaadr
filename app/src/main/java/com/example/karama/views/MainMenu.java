@@ -29,11 +29,11 @@ import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UHelper;
 import com.example.karama.helper.UIHelper;
-import com.example.karama.model.Res3ListStaff;
-import com.example.karama.model.Res4AddStaff;
+import com.example.karama.model.person.Res3ListStaff;
+import com.example.karama.model.person.Res4AddStaff;
 import com.example.karama.model.ResNullData;
-import com.example.karama.model.ResProfile;
-import com.example.karama.model.Staff;
+import com.example.karama.model.person.ResProfile;
+import com.example.karama.model.person.Staff;
 import com.example.karama.services.KaraServices;
 
 import org.json.JSONException;

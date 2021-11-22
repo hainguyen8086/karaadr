@@ -2,7 +2,8 @@ package com.example.karama.views;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,14 +12,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.karama.MainActivity;
 import com.example.karama.R;
-import com.example.karama.model.Customer;
+import com.example.karama.helper.CallbackResponse;
+import com.example.karama.helper.IInterfaceModel;
+import com.example.karama.helper.UIHelper;
+import com.example.karama.model.person.Customer;
+import com.example.karama.model.ResNullData;
+import com.example.karama.services.KaraServices;
+
+import retrofit2.Response;
 
 public class DialogDetailCustomer extends Dialog implements View.OnClickListener {
     public Activity activity;
     Customer customer;
     ImageView img_close,img_staff;
     TextView unlock_mem,lock_mem, update_mem,txt_first_name,txt_last_name,txt_gender,txt_email,txt_sdt,txt_adress1;
+    ProgressDialog loadingLockMem, loadingUnlockMem;
 
     public DialogDetailCustomer(@NonNull Activity context, Customer customer) {
         super(context);
@@ -42,6 +52,10 @@ public class DialogDetailCustomer extends Dialog implements View.OnClickListener
         lock_mem.setVisibility(View.GONE);
         unlock_mem.setVisibility(View.GONE);
         update_mem = findViewById(R.id.update_mem);
+        loadingLockMem = new ProgressDialog(activity);
+        loadingUnlockMem = new ProgressDialog(activity);
+        loadingLockMem.setMessage("Đang vô hiệu hóa khách hàng ...");
+        loadingUnlockMem.setMessage("Đang kích hoạt lại khách hàng ...");
 
         txt_first_name = findViewById(R.id.txt_first_name);
         txt_last_name = findViewById(R.id.txt_last_name);
@@ -70,6 +84,8 @@ public class DialogDetailCustomer extends Dialog implements View.OnClickListener
     private void initClick() {
         img_close.setOnClickListener(this);
         update_mem.setOnClickListener(this);
+        lock_mem.setOnClickListener(this);
+        unlock_mem.setOnClickListener(this);
     }
 
     @Override
@@ -84,8 +100,99 @@ public class DialogDetailCustomer extends Dialog implements View.OnClickListener
                 dialogUpdateustomer.setCanceledOnTouchOutside(false);
                 dialogUpdateustomer.show();
                 break;
-
+            case R.id.lock_mem:
+                UIHelper.showAlertDialogV3(activity, "COFIRM", "Bạn chắc chắc muốn vô hiệu hóa khách hàng này ?", R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                    @Override
+                    public void onSuccess() {
+                        lockMember();
+                    }
+                });
+                break;
+            case R.id.unlock_mem:
+                UIHelper.showAlertDialogV3(activity, "COFIRM", "Bạn chắc chắc muốn kích hoạt khách hàng này ?", R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                    @Override
+                    public void onSuccess() {
+                        unlockMember();
+                    }
+                });
+                break;
 
         }
+    }
+
+    private void unlockMember() {
+        loadingUnlockMem.show();
+        KaraServices.unlockCustomer(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResNullData resUnlock = (ResNullData) response.body();
+                if (resUnlock != null) {
+                    if (resUnlock.equals("200")) {
+                        UIHelper.showAlertDialogV3(activity, "SUCCESS", "Kích hoạt khách hàng thành công", R.drawable.ic_success_35, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                dismiss();
+                            }
+                        });
+                    } else if (resUnlock.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(activity, resUnlock.getStatus(), resUnlock.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(activity, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                activity.startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(activity,resUnlock.getStatus(),resUnlock.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+
+            }
+        }, customer.getPhoneNumber());
+    }
+
+    private void lockMember() {
+        loadingLockMem.show();
+        KaraServices.lockCustomer(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResNullData resLock = (ResNullData) response.body();
+                if (resLock != null) {
+                    if (resLock.getStatus().equals("200")) {
+                        UIHelper.showAlertDialogV3(activity, "SUCCESS", "Vô hiệu hóa khách hàng thành công", R.drawable.ic_success_35, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                dismiss();
+                            }
+                        });
+                    } else if (resLock.getStatus().equals("401")){
+                        UIHelper.showAlertDialogV3(activity, resLock.getStatus(), resLock.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(activity, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                activity.startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(activity,resLock.getStatus(),resLock.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                loadingLockMem.cancel();
+                UIHelper.showAlertDialog(activity,"ERROR",error,R.drawable.troll_64);
+
+            }
+        }, customer.getPhoneNumber());
+
+
     }
 }

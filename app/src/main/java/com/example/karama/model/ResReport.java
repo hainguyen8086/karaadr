@@ -3,27 +3,19 @@ package com.example.karama.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResToken {
-    @SerializedName("status")
-    @Expose
-    private String status;
+public class ResReport {
     @SerializedName("timestamp")
     @Expose
     private String timestamp;
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("message")
     @Expose
     private String message;
     @SerializedName("data")
     @Expose
-    private DataToken data;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    private Report data;
 
     public String getTimestamp() {
         return timestamp;
@@ -31,6 +23,14 @@ public class ResToken {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getMessage() {
@@ -41,11 +41,11 @@ public class ResToken {
         this.message = message;
     }
 
-    public DataToken getData() {
+    public Report getData() {
         return data;
     }
 
-    public void setData(DataToken data) {
+    public void setData(Report data) {
         this.data = data;
     }
 }

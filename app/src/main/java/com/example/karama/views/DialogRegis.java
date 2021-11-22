@@ -3,7 +3,6 @@ package com.example.karama.views;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,22 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.example.karama.MainActivity;
 import com.example.karama.R;
-import com.example.karama.helper.APIHelper;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UHelper;
 import com.example.karama.helper.UIHelper;
-import com.example.karama.model.ResProfile;
+import com.example.karama.model.person.ResProfile;
 import com.example.karama.services.APIServices;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 

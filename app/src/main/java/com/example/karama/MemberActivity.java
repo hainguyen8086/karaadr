@@ -16,12 +16,11 @@ import com.example.karama.adapter.CustomerAdapter;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UIHelper;
-import com.example.karama.model.Customer;
-import com.example.karama.model.ResAllCustomer;
+import com.example.karama.model.person.Customer;
+import com.example.karama.model.person.ResAllCustomer;
 import com.example.karama.services.KaraServices;
 import com.example.karama.views.DialogAddCustomer;
 import com.example.karama.views.DialogDetailCustomer;
-import com.example.karama.views.MainMenu;
 
 import java.util.ArrayList;
 import java.util.List;
