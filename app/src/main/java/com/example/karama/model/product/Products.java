@@ -37,7 +37,8 @@ public class Products {
     }
 
     public String getPrice() {
-        return price;
+        String price2 = price.split("\\.")[0];
+        return price2;
     }
 
     public void setPrice(String price) {

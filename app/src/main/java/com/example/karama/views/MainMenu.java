@@ -5,6 +5,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -15,10 +17,12 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.karama.MainActivity;
 import com.example.karama.MemberActivity;
@@ -55,7 +59,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     View view;
     CardView card_filter,card_info,card_update,card_menuitem;
     TextView text_info,text_update_info,txt_username,txt_first_name,txt_last_name,txt_gender,txt_email, txt_sdt,txt_adress1,txt_adress2,tv_role;
-    TextView update_username, update_email, update_sdt, update_gender,update_adres1,update_adres2,text_qlnv,tv_adduser;
+    TextView update_username, update_email, update_sdt, update_gender,update_adres1,update_adres2,text_qlnv,tv_adduser,reload_rcv,add_product;
     ProgressDialog dialogUpdate,dialogGetProfile,loadingGetStaff,loadingChangepass,loadingAddUser,loadingKItem;
     ImageView img_ketoan,img_manager, img_employee;
     RecyclerView rcv_staff,rcv_menu_items;
@@ -132,7 +136,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         }
 
 
-                    } else if (resProfile.getStatus().equals("401")){
+                    } else if (resProfile.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(mContext, resProfile.getStatus(), resProfile.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
@@ -170,6 +174,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         text_qlnv.setOnClickListener(this);
         tv_adduser.setOnClickListener(this);
         nav_customer.setOnClickListener(this);
+        add_product.setOnClickListener(this);
+        reload_rcv.setOnClickListener(this);
+
     }
 
     private void initView() {
@@ -198,6 +205,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         card_filter.setVisibility(View.GONE);
         card_menuitem = findViewById(R.id.card_menuitem);
         card_menuitem.setVisibility(View.GONE);
+        card_menuitem.animate().translationY(0);
         view.setVisibility(View.GONE);
         card_info = findViewById(R.id.card_info);
         card_info.setVisibility(View.GONE);
@@ -230,6 +238,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         rcv_staff = findViewById(R.id.rcv_staff);
         rcv_menu_items = findViewById(R.id.rcv_menu_items);
         nav_customer = findViewById(R.id.nav_customer);
+        reload_rcv = findViewById(R.id.reload_rcv);
+        add_product = findViewById(R.id.add_product);
         rcv_staff.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rcv_menu_items.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         staffList = new ArrayList<>();
@@ -304,7 +314,15 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 Intent intent = new Intent(MainMenu.this, MemberActivity.class);
                 startActivity(intent);
                 break;
-
+            case R.id.reload_rcv:
+                loadListKItem();
+                break;
+            case R.id.add_product:
+                Log.e("==add:","items");
+                DialogAddItem dlAddItem = new DialogAddItem(MainMenu.this,"ADD");
+                dlAddItem.setCanceledOnTouchOutside(false);
+                dlAddItem.show();
+                break;
         }
     }
 
@@ -324,7 +342,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     itemAdapter = new ItemAdapter(mContext, productsList);
                     rcv_menu_items.setAdapter(itemAdapter);
                     itemAdapter.notifyDataSetChanged();
-                } else if (resAllProducts.getStatus().equals("401")){
+                } else if (resAllProducts.getStatus().equals("403")){
                     UIHelper.showAlertDialogV3(mContext, resAllProducts.getStatus(), resAllProducts.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                         @Override
                         public void onSuccess() {
@@ -368,7 +386,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                             staffAdapter.notifyDataSetChanged();
                         }
 
-                    } else if (resGetStaff.getStatus().equals("401")){
+                    } else if (resGetStaff.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(mContext, resGetStaff.getStatus(), resGetStaff.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
@@ -430,7 +448,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 getProfile();
                             }
                         });
-                    } else if (resUpdate.getStatus().equals("401")){
+                    } else if (resUpdate.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(mContext, resUpdate.getStatus(), resUpdate.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
@@ -498,7 +516,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 if (resRenew != null) {
                     if (resRenew.getStatus().equals("200")) {
                         UIHelper.showAlertDialog(mContext,"SUCCESS",resRenew.getMessage(),R.drawable.ic_success_35);
-                    } else if (resRenew.getStatus().equals("401")){
+                    } else if (resRenew.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(mContext, resRenew.getStatus(), resRenew.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
@@ -538,7 +556,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                             }
                         });
-                    } else if (res4AddStaff.getStatus().equals("401")){
+                    } else if (res4AddStaff.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(mContext, res4AddStaff.getStatus(), res4AddStaff.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
@@ -562,6 +580,73 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         },stringAddUser);
 
 
+    }
+
+    public void lockItem(String productId) {
+        ProdServices.lockProducrt(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResNullData resLock = (ResNullData) response.body();
+                if (resLock != null) {
+                    if (resLock.getStatus().equals("200")) {
+                        Toast.makeText(mContext, resLock.getStatus()+"-"+resLock.getMessage(), Toast.LENGTH_SHORT).show();
+                        loadListKItem();
+                    } else if (resLock.getStatus().equals("403")){
+                        UIHelper.showAlertDialogV3(mContext, resLock.getStatus(), resLock.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(mContext,resLock.getStatus(),resLock.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+
+            }
+        },productId);
+    }
+    public void unLockItem(String productId) {
+        ProdServices.unlockProduct(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResNullData resLock = (ResNullData) response.body();
+                if (resLock != null) {
+                    if (resLock.getStatus().equals("200")) {
+                        Toast.makeText(mContext, resLock.getStatus()+"-"+resLock.getMessage(), Toast.LENGTH_SHORT).show();
+                        loadListKItem();
+                    } else if (resLock.getStatus().equals("403")){
+                        UIHelper.showAlertDialogV3(mContext, resLock.getStatus(), resLock.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                            @Override
+                            public void onSuccess() {
+                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        });
+                    } else{
+                        UIHelper.showAlertDialog(mContext,resLock.getStatus(),resLock.getMessage(),R.drawable.troll_64);
+                    }
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+
+            }
+        },productId);
+    }
+
+    public void dialogUpdateItem(Products item){
+        DialogAddItem dialogUpdateItem = new DialogAddItem(MainMenu.this, "UPDATE", item);
+        dialogUpdateItem.setCanceledOnTouchOutside(false);
+        dialogUpdateItem.show();
     }
 
 }

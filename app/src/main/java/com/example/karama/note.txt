@@ -1,0 +1,2 @@
+DialogAddItem chưa xử lí luồn API _ xong UI
+//call api add sp & reload _
