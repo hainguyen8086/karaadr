@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.karama.MainActivity;
 import com.example.karama.MemberActivity;
 import com.example.karama.R;
+import com.example.karama.adapter.ItemAdapter;
 import com.example.karama.adapter.StaffAdapter;
 import com.example.karama.data.SharedPrefManager;
 import com.example.karama.helper.CallbackResponse;
@@ -34,7 +35,10 @@ import com.example.karama.model.person.Res4AddStaff;
 import com.example.karama.model.ResNullData;
 import com.example.karama.model.person.ResProfile;
 import com.example.karama.model.person.Staff;
+import com.example.karama.model.product.Products;
+import com.example.karama.model.product.ResAllProducts;
 import com.example.karama.services.KaraServices;
+import com.example.karama.services.ProdServices;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,16 +51,18 @@ import retrofit2.Response;
 public class MainMenu extends AppCompatActivity implements View.OnClickListener {
     public Context mContext =this;
     public static Dialog loadingDialog;
-    Button nav,btn_update,btn_logout;
+    Button nav,btn_update,btn_logout,nav_product;
     View view;
-    CardView card_filter,card_info,card_update;
+    CardView card_filter,card_info,card_update,card_menuitem;
     TextView text_info,text_update_info,txt_username,txt_first_name,txt_last_name,txt_gender,txt_email, txt_sdt,txt_adress1,txt_adress2,tv_role;
     TextView update_username, update_email, update_sdt, update_gender,update_adres1,update_adres2,text_qlnv,tv_adduser;
-    ProgressDialog dialogUpdate,dialogGetProfile,loadingGetStaff,loadingChangepass,loadingAddUser;
+    ProgressDialog dialogUpdate,dialogGetProfile,loadingGetStaff,loadingChangepass,loadingAddUser,loadingKItem;
     ImageView img_ketoan,img_manager, img_employee;
-    RecyclerView rcv_staff;
+    RecyclerView rcv_staff,rcv_menu_items;
     StaffAdapter staffAdapter;
+    ItemAdapter itemAdapter;
     List<Staff> staffList;
+    List<Products> productsList;
     TextView nav_customer;
     private String m_newpass = "";
     private static MainMenu instance;
@@ -153,6 +159,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
     private void setClick() {
         nav.setOnClickListener(this);
+        nav_product.setOnClickListener(this);
         btn_update.setOnClickListener(this);
         btn_logout.setOnClickListener(this);
         view.setOnClickListener(this);
@@ -177,15 +184,20 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         loadingChangepass.setProgressDrawable(mContext.getDrawable(R.drawable.loading_64));
         loadingAddUser = new ProgressDialog(mContext);
         loadingAddUser.setMessage("Đang thêm User \n Vui lòng đợi");
+        loadingKItem = new ProgressDialog(mContext);
+        loadingKItem.setMessage("Loading karaoke order items...");
         loadingChangepass.setProgressDrawable(mContext.getDrawable(R.drawable.import_36));
         loadingGetStaff = new ProgressDialog(mContext);
         loadingGetStaff.setMessage("Getting List Staffs...!");
         nav = findViewById(R.id.nav);
+        nav_product = findViewById(R.id.nav_product);
         btn_update = findViewById(R.id.btn_update);
         btn_logout = findViewById(R.id.btn_logout);
         view = findViewById(R.id.view);
         card_filter = findViewById(R.id.card_filter);
         card_filter.setVisibility(View.GONE);
+        card_menuitem = findViewById(R.id.card_menuitem);
+        card_menuitem.setVisibility(View.GONE);
         view.setVisibility(View.GONE);
         card_info = findViewById(R.id.card_info);
         card_info.setVisibility(View.GONE);
@@ -216,9 +228,12 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         tv_adduser.setVisibility(View.GONE);
 
         rcv_staff = findViewById(R.id.rcv_staff);
+        rcv_menu_items = findViewById(R.id.rcv_menu_items);
         nav_customer = findViewById(R.id.nav_customer);
         rcv_staff.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        rcv_menu_items.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         staffList = new ArrayList<>();
+        productsList = new ArrayList<>();
 
     }
 
@@ -229,8 +244,14 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 view.setVisibility(View.VISIBLE);
                 card_filter.setVisibility(View.VISIBLE);
                 break;
+            case R.id.nav_product:
+                view.setVisibility(View.VISIBLE);
+                card_menuitem.setVisibility(View.VISIBLE);
+                loadListKItem();
+                break;
             case R.id.view:
                 card_filter.setVisibility(View.GONE);
+                card_menuitem.setVisibility(View.GONE);
                 view.setVisibility(View.GONE);
                 rcv_staff.setVisibility(View.GONE);
                 break;
@@ -260,6 +281,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     card_filter.setVisibility(View.VISIBLE);
                 }
                 break;
+            case R.id.card_menuitem:
+                if (view.isShown()) {
+                    card_menuitem.setVisibility(View.VISIBLE);
+                }
             case R.id.text_qlnv:
                 if (rcv_staff.isShown()) {
                     rcv_staff.setVisibility(View.GONE);
@@ -281,6 +306,47 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 break;
 
         }
+    }
+
+    public void loadListKItem() {
+        loadingKItem.show();
+        ProdServices.getAllProduct(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                loadingKItem.cancel();
+                ResAllProducts resAllProducts = (ResAllProducts) response.body();
+                if (resAllProducts.getStatus().equals("200")) {
+                    productsList.clear();
+                    for (int i = 0; i < resAllProducts.getData().getData().size(); i++) {
+                        Products item = resAllProducts.getData().getData().get(i);
+                        productsList.add(item);
+                    }
+                    itemAdapter = new ItemAdapter(mContext, productsList);
+                    rcv_menu_items.setAdapter(itemAdapter);
+                    itemAdapter.notifyDataSetChanged();
+                } else if (resAllProducts.getStatus().equals("401")){
+                    UIHelper.showAlertDialogV3(mContext, resAllProducts.getStatus(), resAllProducts.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                        @Override
+                        public void onSuccess() {
+                            Intent i = new Intent(MainMenu.this, MainActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(i);
+                        }
+                    });
+                } else{
+                    UIHelper.showAlertDialog(mContext,resAllProducts.getStatus(),resAllProducts.getMessage(),R.drawable.troll_64);
+                }
+
+            }
+
+            @Override
+            public void Error(String error) {
+                loadingKItem.cancel();
+
+            }
+        });
+
+
     }
 
     private void getStaff() {
