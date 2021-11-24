@@ -97,7 +97,7 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void loadCustomer() {
+    public void loadCustomer() {
         customerList.clear();
         loadingGetCustomer.show();
         KaraServices.getAllCustomer(new CallbackResponse() {
@@ -114,7 +114,7 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
                         customerAdapter = new CustomerAdapter(mContext, customerList);
                         rcv_customer.setAdapter(customerAdapter);
                         customerAdapter.notifyDataSetChanged();
-                    } else if (resAllCustomer.getStatus().equals("401")){
+                    } else if (resAllCustomer.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(mContext, resAllCustomer.getStatus(), resAllCustomer.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {

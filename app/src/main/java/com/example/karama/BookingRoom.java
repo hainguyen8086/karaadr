@@ -355,4 +355,9 @@ public class BookingRoom extends AppCompatActivity implements View.OnClickListen
     {
         datePickerDialog.show();
     }
+    public void f5(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
 }

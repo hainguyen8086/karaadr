@@ -1,6 +1,7 @@
 package com.example.karama.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.example.karama.Booking;
 import com.example.karama.BookingRoom;
 import com.example.karama.R;
 import com.example.karama.model.room.DataRoom;
@@ -82,10 +84,12 @@ public class GridRoomAdapter extends RecyclerView.Adapter<GridRoomAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "BookID:"+room.getId(), Toast.LENGTH_SHORT).show();
-                if (BookingRoom.getInstance() != null) {
-                    BookingRoom.getInstance().openDatePicker();
-//                    BookingRoom.getInstance().popTimePicker();
-                }
+//                if (BookingRoom.getInstance() != null) {
+//                    BookingRoom.getInstance().openDatePicker();
+//                }
+                Intent intent = new Intent(mContext, Booking.class);
+                intent.putExtra("idRoom", room.getId());
+                mContext.startActivity(intent);
             }
         });
 

@@ -5,11 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.karama.MemberActivity;
 import com.example.karama.R;
 import com.example.karama.model.person.Customer;
@@ -20,6 +25,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
     Context mContext;
     List<Customer> customerList;
     LayoutInflater layoutInflater;
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     public CustomerAdapter(Context mContext, List<Customer> customerList) {
         this.mContext = mContext;
@@ -37,15 +43,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Customer customer = customerList.get(position);
-        holder.tv_id.setText(customer.getId());
-        holder.text_name.setText(customer.getFirstName()+" "+customer.getLastName());
-        holder.text_sdt.setText(customer.getPhoneNumber());
-        if (customer.getGender().equals("MALE")) {
-            holder.avt_customer.setImageDrawable(mContext.getDrawable(R.drawable.sing_boy35));
-        } else {
-            holder.avt_customer.setImageDrawable(mContext.getDrawable(R.drawable.sing_girl35));
-        }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewBinderHelper.bind(holder.swipeRevealLayout, customer.getId());
+        viewBinderHelper.setOpenOnlyOne(true);
+
+        holder.layout_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //show dialog detail customer
@@ -54,6 +55,27 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
                 }
             }
         });
+
+        holder.tv_id.setText(customer.getId());
+        if (customer.getGender().equals("MALE")) {
+            holder.tv_id.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.sing_boy35, 0, 0);
+        } else {
+            holder.tv_id.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.sing_girl35, 0, 0);
+        }
+        //set lock user
+        if (!customer.getStatus().equals("1")) {
+            holder.tv_id.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.crimiral_35, 0, 0);
+            holder.tv_id.setText("Wanted");
+        } else {
+            holder.layout_recept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, customer.getPhoneNumber(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        holder.text_name.setText(customer.getFirstName()+" "+customer.getLastName()+"\n"+customer.getPhoneNumber());
+
     }
 
     @Override
@@ -62,14 +84,17 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView avt_customer;
-        TextView tv_id,text_name, text_sdt;
+        SwipeRevealLayout swipeRevealLayout;
+        LinearLayout layout_recept;
+        TextView tv_id, text_name;
+        RelativeLayout layout_main;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            avt_customer = itemView.findViewById(R.id.avt_customer);
+            layout_recept = itemView.findViewById(R.id.layout_recept);
             tv_id = itemView.findViewById(R.id.tv_id);
             text_name = itemView.findViewById(R.id.text_name);
-            text_sdt = itemView.findViewById(R.id.text_sdt);
+            swipeRevealLayout = itemView.findViewById(R.id.swipe_layout);
+            layout_main = itemView.findViewById(R.id.layout_main);
 
 
         }

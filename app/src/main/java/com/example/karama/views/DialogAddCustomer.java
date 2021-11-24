@@ -137,7 +137,7 @@ public class DialogAddCustomer extends Dialog {
                                                 dismiss();
                                             }
                                         });
-                                    } else if (resAddCustomer.getStatus().equals("401")){
+                                    } else if (resAddCustomer.getStatus().equals("403")){
                                         UIHelper.showAlertDialogV3(activity, resAddCustomer.getStatus(), resAddCustomer.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                                             @Override
                                             public void onSuccess() {
@@ -176,7 +176,7 @@ public class DialogAddCustomer extends Dialog {
                                                 dismiss();
                                             }
                                         });
-                                    } else if (resUpdate.getStatus().equals("401")){
+                                    } else if (resUpdate.getStatus().equals("403")){
                                         UIHelper.showAlertDialogV3(activity, resUpdate.getStatus(), resUpdate.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                                             @Override
                                             public void onSuccess() {

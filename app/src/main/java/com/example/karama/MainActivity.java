@@ -55,33 +55,36 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkTokenInvalid() {
         if (!SharedPrefManager.getRefreshToken().equals("NON")) {
-            Log.e("==pref_refreshToken:", "NOT NON");
+            Log.e("==pref_refreshToken:", SharedPrefManager.getRefreshToken());
             if (!SharedPrefManager.getAccessToken().equals("NON")) {
-                Log.e("==pref_accessToken:", "NOT NON");
+                Log.e("==pref_accessToken:", SharedPrefManager.getAccessToken());
+                Log.e("==pref_user:", SharedPrefManager.getUsername());
                 //check token valid
-                loadingDialog.show();
-                KaraServices.checkToken(mContext, new CallbackResponse() {
-                    @Override
-                    public void Success(Response<?> response) {
-                        loadingDialog.cancel();
-                        ResAllProducts resAllProducts = (ResAllProducts) response.body();
-                        if (resAllProducts != null) {
-                            if (resAllProducts.getStatus().equals("200")) {
-                                Intent intent = new Intent(MainActivity.this, MainMenu.class);
-                                startActivity(intent);
-                            } else {
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void Error(String error) {
-                        loadingDialog.cancel();
-                        UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.amazing_64);
-
-                    }
-                },"0","30","ASC");
+                Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                startActivity(intent);
+//                loadingDialog.show();
+//                KaraServices.checkToken(mContext, new CallbackResponse() {
+//                    @Override
+//                    public void Success(Response<?> response) {
+//                        loadingDialog.cancel();
+//                        ResAllProducts resAllProducts = (ResAllProducts) response.body();
+//                        if (resAllProducts != null) {
+//                            if (resAllProducts.getStatus().equals("200")) {
+//                                Intent intent = new Intent(MainActivity.this, MainMenu.class);
+//                                startActivity(intent);
+//                            } else {
+//
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void Error(String error) {
+//                        loadingDialog.cancel();
+//                        UIHelper.showAlertDialog(mContext,"ERROR",error,R.drawable.amazing_64);
+//
+//                    }
+//                },"0","30","ASC");
             }
         }
     }

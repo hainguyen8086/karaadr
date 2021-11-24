@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.karama.MainActivity;
+import com.example.karama.MemberActivity;
 import com.example.karama.R;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.IInterfaceModel;
@@ -125,16 +126,14 @@ public class DialogDetailCustomer extends Dialog implements View.OnClickListener
         KaraServices.unlockCustomer(new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
+                loadingUnlockMem.cancel();
                 ResNullData resUnlock = (ResNullData) response.body();
                 if (resUnlock != null) {
-                    if (resUnlock.equals("200")) {
-                        UIHelper.showAlertDialogV3(activity, "SUCCESS", "Kích hoạt khách hàng thành công", R.drawable.ic_success_35, new IInterfaceModel.OnBackIInterface() {
-                            @Override
-                            public void onSuccess() {
-                                dismiss();
-                            }
-                        });
-                    } else if (resUnlock.getStatus().equals("401")){
+                    if (resUnlock.getStatus().equals("200")) {
+                        dismiss();
+                        MemberActivity.getInstance().loadCustomer();
+
+                    } else if (resUnlock.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(activity, resUnlock.getStatus(), resUnlock.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
@@ -151,6 +150,8 @@ public class DialogDetailCustomer extends Dialog implements View.OnClickListener
 
             @Override
             public void Error(String error) {
+                loadingUnlockMem.cancel();
+                UIHelper.showAlertDialog(activity, "ERROR", error, R.drawable.bad_face_35);
 
             }
         }, customer.getPhoneNumber());
@@ -161,16 +162,13 @@ public class DialogDetailCustomer extends Dialog implements View.OnClickListener
         KaraServices.lockCustomer(new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
+                loadingLockMem.cancel();
                 ResNullData resLock = (ResNullData) response.body();
                 if (resLock != null) {
                     if (resLock.getStatus().equals("200")) {
-                        UIHelper.showAlertDialogV3(activity, "SUCCESS", "Vô hiệu hóa khách hàng thành công", R.drawable.ic_success_35, new IInterfaceModel.OnBackIInterface() {
-                            @Override
-                            public void onSuccess() {
-                                dismiss();
-                            }
-                        });
-                    } else if (resLock.getStatus().equals("401")){
+                        dismiss();
+                        MemberActivity.getInstance().loadCustomer();
+                    } else if (resLock.getStatus().equals("403")){
                         UIHelper.showAlertDialogV3(activity, resLock.getStatus(), resLock.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {

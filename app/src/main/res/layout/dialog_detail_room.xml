@@ -123,7 +123,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:drawableTop="@drawable/cancel_45"
+        android:drawableTop="@drawable/cancel2_45"
         android:gravity="center"
         android:text="cancel\nbooking" />
     <TextView

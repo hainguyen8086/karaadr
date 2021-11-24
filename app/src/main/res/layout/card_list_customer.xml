@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chauthai.swipereveallayout.SwipeRevealLayout
     android:layout_width="match_parent"
-    android:background="@drawable/square_button_white"
-    android:layout_height="wrap_content">
+    android:id="@+id/swipe_layout"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:mode="same_level"
+    app:dragEdge="right"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:id="@+id/layout_avt_id"
+        android:id="@+id/layout_recept"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/avt_customer"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_update"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sing_boy35" />
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/recept_40"
+            android:text="Recept" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="@drawable/square_button_white2"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/avt_customer"
+            android:drawableTop="@drawable/sing_boy35"
             android:gravity="center"
             android:text="ID Customer"
             android:textStyle="bold"
             android:padding="5dp" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/layout_avt_id"
-        android:text="name" />
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_toEndOf="@+id/tv_id"
+            android:text="name\nsdtxxxxx" />
 
-    <TextView
-        android:id="@+id/text_sdt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_name"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/layout_avt_id"
-        android:text="0xxxxxxx" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

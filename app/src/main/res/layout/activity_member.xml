@@ -47,48 +47,32 @@
     <EditText
         android:id="@+id/sdt_input"
         android:layout_width="wrap_content"
-        android:layout_margin="10dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/phone_24"
         android:layout_below="@+id/bar_customer"
-        android:layout_toEndOf="@+id/add_customer"
-        android:background="@drawable/rounded_edittext"
-        android:paddingHorizontal="10dp"
-        android:hint="Number Phone Customer"
-        android:textSize="14dp" />
-
-    <EditText
-        android:id="@+id/id_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sdt_input"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/add_customer"
         android:background="@drawable/rounded_edittext"
-        android:drawableLeft="@drawable/id_24"
-        android:hint="ID User"
+        android:drawableRight="@drawable/phone_24"
+        android:drawablePadding="5dp"
+        android:hint="Number Phone Customer"
         android:paddingHorizontal="10dp"
         android:textSize="14dp" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/id_input"
-        android:layout_alignBottom="@+id/id_input"
-        android:layout_marginHorizontal="10dp"
-        android:src="@drawable/search_35" />
 
     <TextView
         android:id="@+id/textlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/add_customer"
+        android:layout_below="@+id/sdt_input"
+        android:layout_toEndOf="@+id/add_customer"
+        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/square_button_white"
-        android:drawableRight="@drawable/down2_24"
+        android:drawableRight="@drawable/reload_35"
+        android:drawablePadding="5dp"
+        android:gravity="center"
         android:text="List of Customer"
         android:textSize="16dp" />
 

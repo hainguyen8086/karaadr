@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Karama">
         <activity
+            android:name=".Booking"
+            android:exported="false" />
+        <activity
             android:name=".BookingRoom"
             android:exported="false" />
         <activity

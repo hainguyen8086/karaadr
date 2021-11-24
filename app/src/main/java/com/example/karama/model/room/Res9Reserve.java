@@ -9,7 +9,7 @@ public class Res9Reserve {
     private String timestamp;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
     @SerializedName("message")
     @Expose
     private String message;
@@ -17,4 +17,35 @@ public class Res9Reserve {
     @Expose
     private DataReserveRoom data;
 
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public DataReserveRoom getData() {
+        return data;
+    }
+
+    public void setData(DataReserveRoom data) {
+        this.data = data;
+    }
 }

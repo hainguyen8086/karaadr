@@ -67,7 +67,11 @@ public class DialogDetailRoom extends Dialog implements View.OnClickListener {
             tag_type_view.setText("Normal");
         }
         if (room.getStatusCode().equals("ENABLE")) {
-
+            ic_lock.setVisibility(View.VISIBLE);
+            ic_unlock.setVisibility(View.GONE);
+        } else {
+            ic_lock.setVisibility(View.GONE);
+            ic_unlock.setVisibility(View.VISIBLE);
         }
 
     }

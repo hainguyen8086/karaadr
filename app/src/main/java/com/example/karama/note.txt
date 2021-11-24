@@ -1,2 +1,14 @@
 DialogAddItem chưa xử lí luồn API _ xong UI
 //call api add sp & reload _
+api 13 . xem order bill = rooomID -> bổ sung button xem vào detail roôm -> dialog detail + button check in
+api 16 xem ỏdẻ bill =sdt -> list khách hàng thêm swipe xem phiếu -> dialog detail + button check in
+
+
+
+//=============ERR
+CASE khách hàng bị khóa vẫn cho đặt phòng
+
+row_one_recept -"bookingId": 5,
+                            "startTime": "2021-11-20T17:50:00",
+                            "roomId": 5,
+                            "guestPhoneNumber": "0123456771""statusCodeName": "PENDING"
