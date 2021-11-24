@@ -9,7 +9,7 @@ public class ResListRoom {
     private String timestamp;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private String status;
     @SerializedName("message")
     @Expose
     private String message;
@@ -25,11 +25,11 @@ public class ResListRoom {
         this.timestamp = timestamp;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.karama.BookingRoom;
 import com.example.karama.MainActivity;
 import com.example.karama.MemberActivity;
 import com.example.karama.R;
@@ -67,7 +68,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     ItemAdapter itemAdapter;
     List<Staff> staffList;
     List<Products> productsList;
-    TextView nav_customer;
+    TextView nav_customer,nav_room;
     private String m_newpass = "";
     private static MainMenu instance;
 
@@ -174,6 +175,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         text_qlnv.setOnClickListener(this);
         tv_adduser.setOnClickListener(this);
         nav_customer.setOnClickListener(this);
+        nav_room.setOnClickListener(this);
         add_product.setOnClickListener(this);
         reload_rcv.setOnClickListener(this);
 
@@ -238,6 +240,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         rcv_staff = findViewById(R.id.rcv_staff);
         rcv_menu_items = findViewById(R.id.rcv_menu_items);
         nav_customer = findViewById(R.id.nav_customer);
+        nav_room = findViewById(R.id.nav_room);
         reload_rcv = findViewById(R.id.reload_rcv);
         add_product = findViewById(R.id.add_product);
         rcv_staff.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
@@ -313,6 +316,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             case R.id.nav_customer:
                 Intent intent = new Intent(MainMenu.this, MemberActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_room:
+                Intent intent1 = new Intent(MainMenu.this, BookingRoom.class);
+                startActivity(intent1);
                 break;
             case R.id.reload_rcv:
                 loadListKItem();

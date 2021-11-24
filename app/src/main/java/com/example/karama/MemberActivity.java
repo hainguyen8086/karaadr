@@ -45,6 +45,7 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
 
         initView();
         initClick();
+        loadCustomer();
     }
 
     private void initClick() {
