@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -71,6 +70,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, customer.getPhoneNumber(), Toast.LENGTH_SHORT).show();
+                    MemberActivity.getInstance().getDialogRecept(customer.getPhoneNumber());
                 }
             });
         }

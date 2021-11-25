@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/square_button_white2"
+    android:padding="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/bookingId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:drawableLeft="@drawable/id_24"
+        android:gravity="center"
+        android:text="bookingId\nxx" />
+
+    <TextView
+        android:id="@+id/roomId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bookingId"
+        android:layout_marginHorizontal="10dp"
+        android:drawableLeft="@drawable/room_24"
+        android:gravity="center"
+        android:text="roomId\nxx" />
+
+        <TextView
+            android:id="@+id/orderId"
+            android:layout_below="@+id/roomId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:drawableLeft="@drawable/order_24"
+            android:gravity="center"
+            android:text="orderID\nxx" />
+
+
+    <TextView
+        android:id="@+id/time_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderId"
+        android:drawableLeft="@drawable/timeline_24"
+        android:layout_marginHorizontal="10dp"
+        android:gravity="center"
+        android:text="TimeStart:" />
+
+    <TextView
+        android:id="@+id/statusCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_start"
+        android:drawableLeft="@drawable/status_24"
+        android:layout_marginHorizontal="10dp"
+        android:gravity="center"
+        android:text="Status" />
+
+    <TextView
+        android:id="@+id/checkin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:drawableTop="@drawable/checkin_36"
+        android:gravity="center"
+        android:text="Checkin" />
+
+
+
+
 
 </RelativeLayout>

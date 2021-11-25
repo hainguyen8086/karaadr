@@ -21,6 +21,7 @@ import com.example.karama.model.person.ResAllCustomer;
 import com.example.karama.services.KaraServices;
 import com.example.karama.views.DialogAddCustomer;
 import com.example.karama.views.DialogDetailCustomer;
+import com.example.karama.views.DialogReceptByPhone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,5 +137,12 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         },"0","30","ASC");
+    }
+
+    public void getDialogRecept(String sdt) {
+        DialogReceptByPhone dialogReceptByPhone = new DialogReceptByPhone(MemberActivity.this, sdt);
+        dialogReceptByPhone.setCancelable(false);
+        dialogReceptByPhone.show();
+
     }
 }
