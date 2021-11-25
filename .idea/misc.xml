@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/background_gray.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable/border_button_white.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable/border_dialog_2.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable/border_edt.xml" value="0.20885416666666667" />
@@ -11,27 +10,31 @@
         <entry key="app/src/main/res/drawable/btn_focused.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_login.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/btn_pressed.xml" value="0.10520833333333333" />
-        <entry key="app/src/main/res/drawable/dialog_detail_room.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/drawable/non_background.xml" value="0.15729166666666666" />
-        <entry key="app/src/main/res/drawable/square_button_white.xml" value="0.20885416666666667" />
-        <entry key="app/src/main/res/drawable/square_button_white2.xml" value="0.20885416666666667" />
-        <entry key="app/src/main/res/layout/activity_booking_room.xml" value="0.22" />
+        <entry key="app/src/main/res/drawable/square_button_green.xml" value="0.3953125" />
+        <entry key="app/src/main/res/drawable/square_button_red.xml" value="0.3953125" />
+        <entry key="app/src/main/res/drawable/square_button_white.xml" value="0.2203125" />
+        <entry key="app/src/main/res/drawable/square_button_white2.xml" value="0.3953125" />
+        <entry key="app/src/main/res/drawable/square_button_white3.xml" value="0.3953125" />
+        <entry key="app/src/main/res/layout/activity_booking.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_booking_room.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_member.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_member.xml" value="0.22" />
         <entry key="app/src/main/res/layout/btn_login.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/card_list_customer.xml" value="0.25" />
         <entry key="app/src/main/res/layout/card_member.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/custom_dialog_confirm_otp.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/dialog_add_customer.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/dialog_add_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/dialog_add_room.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/dialog_add_item.xml" value="0.30833333333333335" />
+        <entry key="app/src/main/res/layout/dialog_chose_guest.xml" value="0.1824074074074074" />
         <entry key="app/src/main/res/layout/dialog_detail_room.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_item_load.xml" value="0.19270833333333334" />
-        <entry key="app/src/main/res/layout/dialog_recept_by_phone.xml" value="0.18840579710144928" />
         <entry key="app/src/main/res/layout/dialog_sign_in.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/item_room.xml" value="0.2576" />
-        <entry key="app/src/main/res/layout/row_item_product.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/row_one_recept.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_chose_customer.xml" value="0.20925925925925926" />
+        <entry key="app/src/main/res/layout/item_room.xml" value="0.18796296296296297" />
+        <entry key="app/src/main/res/layout/row_item_product.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/row_one_recept.xml" value="0.25" />
       </map>
     </option>
   </component>

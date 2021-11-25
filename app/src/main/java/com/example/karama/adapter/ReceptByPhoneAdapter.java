@@ -1,6 +1,7 @@
 package com.example.karama.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.karama.Booking;
+import com.example.karama.MainActivity;
 import com.example.karama.R;
+import com.example.karama.helper.CallbackResponse;
+import com.example.karama.helper.IInterfaceModel;
+import com.example.karama.helper.UIHelper;
+import com.example.karama.model.ResNullData;
 import com.example.karama.model.room.DataOrder;
+import com.example.karama.model.room.ResCheckin;
+import com.example.karama.services.RumServices;
+import com.example.karama.views.DialogReceptByPhone;
 
 import java.util.List;
+
+import retrofit2.Response;
 
 public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdapter.ViewHolder> {
     Context mContext;
@@ -47,6 +59,62 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
             public void onClick(View v) {
                 // checin
                 Toast.makeText(mContext, "Checkin-BookingID:"+recep.getBookingId(), Toast.LENGTH_SHORT).show();
+                RumServices.checkIn(new CallbackResponse() {
+                    @Override
+                    public void Success(Response<?> response) {
+                        Log.e("==checkin", "onSucess");
+                        ResCheckin resCheckin = (ResCheckin) response.body();
+                        if (resCheckin != null) {
+                            if (resCheckin.getStatus().equals("200")) {
+                                Log.e("checkin", "success");
+                                Toast.makeText(mContext, "Checkin thành công", Toast.LENGTH_SHORT).show();
+//                                UIHelper.showAlertDialog(mContext, "Check in succes _", resCheckin.toString(),R.drawable.ic_success_35);
+                                DialogReceptByPhone.getInstance().loadAllOrderRecept();
+                            } else if (resCheckin.getStatus().equals("403")){
+                                UIHelper.showAlertDialogV3(mContext, resCheckin.getStatus(), resCheckin.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Intent i = new Intent(mContext, MainActivity.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        mContext.startActivity(i);
+                                    }
+                                });
+                            } else{
+                                Log.e("==checkin", resCheckin.getMessage());
+                                UIHelper.showAlertDialog(mContext,resCheckin.getStatus(),resCheckin.getMessage(),R.drawable.troll_64);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void Error(String error) {
+
+                    }
+                }, recep.getBookingId());
+
+            }
+        });
+
+        holder.cancel_booking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RumServices.cancelBook(new CallbackResponse() {
+                    @Override
+                    public void Success(Response<?> response) {
+                        ResNullData resCancelBooking = (ResNullData) response.body();
+                        if (resCancelBooking != null) {
+                            if (resCancelBooking.getStatus().equals("200")) {
+                                Toast.makeText(mContext, "Hủy đặt phòng thành công", Toast.LENGTH_SHORT).show();
+                                DialogReceptByPhone.getInstance().loadAllOrderRecept();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void Error(String error) {
+
+                    }
+                }, recep.getBookingId());
             }
         });
 
@@ -59,7 +127,7 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView bookingId,roomId,orderId,time_start,statusCode, checkin;
+        TextView bookingId,roomId,orderId,time_start,statusCode, checkin,cancel_booking;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             bookingId = itemView.findViewById(R.id.bookingId);
@@ -68,6 +136,7 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
             time_start = itemView.findViewById(R.id.time_start);
             statusCode = itemView.findViewById(R.id.statusCode);
             checkin = itemView.findViewById(R.id.checkin);
+            cancel_booking = itemView.findViewById(R.id.cancel_booking);
 
 
         }

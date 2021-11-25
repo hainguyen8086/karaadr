@@ -43,6 +43,7 @@ public class DialogReceptByPhone extends Dialog {
     TextView title;
     String sdt;
     ImageView view_close;
+    private static DialogReceptByPhone instance;
 
 //    ImageView splash;
     public DialogReceptByPhone(@NonNull Activity context,String phone) {
@@ -68,7 +69,7 @@ public class DialogReceptByPhone extends Dialog {
 
     }
 
-    private void loadAllOrderRecept() {
+    public void loadAllOrderRecept() {
         RumServices.getListOrderBySDT(new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
@@ -107,6 +108,13 @@ public class DialogReceptByPhone extends Dialog {
         },sdt);
     }
 
+    public static DialogReceptByPhone getInstance() {
+        if (instance == null) {
+            instance = new DialogReceptByPhone(instance.activity, getInstance().sdt);
+        }
+        return instance;
+    }
+
     private void tstAnimate() {
 //        RotateAnimation anim = new RotateAnimation(0f, 30f, 5f, 5f);
 //        anim.setInterpolator(new LinearInterpolator());
@@ -122,6 +130,7 @@ public class DialogReceptByPhone extends Dialog {
     }
 
     private void initView() {
+        instance = this;
         orderList = new ArrayList<>();
         title = findViewById(R.id.title_order);
         recyclerView = findViewById(R.id.rcv_order);
