@@ -38,7 +38,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/border_button_white"
+        android:background="@drawable/border_button"
         android:drawableTop="@drawable/adduser_64"
         android:paddingHorizontal="10dp"
         android:text="ADD Customer"

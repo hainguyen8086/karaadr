@@ -1,6 +1,7 @@
 package com.example.karama.services;
 
 import com.example.karama.model.ResReport;
+import com.example.karama.model.order.ResLitBill;
 import com.example.karama.model.person.Res3ListStaff;
 import com.example.karama.model.person.Res4AddStaff;
 import com.example.karama.model.person.ResAllCustomer;
@@ -31,6 +32,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -187,9 +189,11 @@ public interface KaraInterface {
     Call<ResBill> getBillByID(@Path(value = "id", encoded = true) String id,
                               @HeaderMap Map<String, String> headers);
     //api 32.Xem hoa don theo ngay
+    /*@GET("orders/day?page=0&size=50&sort=ASC")
+    * */
     @GET("orders/day?page=0&size=50&sort=ASC")
-    Call<ResBill> getBillByDate(@HeaderMap Map<String, String> headers,
-                                @Body RequestBody body);
+    Call<ResLitBill> getBillByDate(@HeaderMap Map<String, String> headers,
+                                   @Body RequestBody body);
     //api 33.Thanh toan hoa don
     @GET("orders/pay/{orderId}")
     Call<ResBill> payment(@Path(value = "orderId", encoded = true) String orderId,

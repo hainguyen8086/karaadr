@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/border_button_white"
+            android:background="@drawable/border_button"
             android:paddingHorizontal="10dp"
             android:text="Resend OTP"
             android:textColor="@color/x_red" />
@@ -72,7 +72,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="20dp"
             android:layout_toEndOf="@+id/btn_resend_otp"
-            android:background="@drawable/border_button_white"
+            android:background="@drawable/border_button"
             android:paddingHorizontal="10dp"
             android:text="Confirm"
             android:textColor="@color/x_blue" />

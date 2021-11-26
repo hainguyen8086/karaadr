@@ -6,6 +6,9 @@ import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.UrlConfig;
 import com.example.karama.model.ResNullData;
 import com.example.karama.model.order.ResBill;
+import com.example.karama.model.order.ResLitBill;
+
+import org.json.JSONObject;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -111,18 +114,21 @@ public class OrderServices {
 
     //api 32.Xem hoa don theo ngay
     public static void getBillByDate(CallbackResponse callbackResponse, String bodyGetBill) {
+        RequestBody requestBody = RequestBody.create(APIHelper.JSON, bodyGetBill);
+
         APIClient.getClient(UrlConfig.KARA).create(KaraInterface.class)
-                .getBillByDate(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()),APIHelper.parseReq(bodyGetBill))
-                .enqueue(new Callback<ResBill>() {
+                .getBillByDate(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()),requestBody)
+//                .getBillByDate(APIHelper.API_HEADER(SharedPrefManager.getAccessToken()),APIHelper.parseReq(bodyGetBill))
+                .enqueue(new Callback<ResLitBill>() {
                     @Override
-                    public void onResponse(Call<ResBill> call, Response<ResBill> response) {
+                    public void onResponse(Call<ResLitBill> call, Response<ResLitBill> response) {
                         if (response.isSuccessful()) {
                             callbackResponse.Success(response);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ResBill> call, Throwable t) {
+                    public void onFailure(Call<ResLitBill> call, Throwable t) {
                         callbackResponse.Error(t.getMessage());
                     }
                 });

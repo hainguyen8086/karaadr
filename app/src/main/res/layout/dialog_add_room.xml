@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/border_button_white"
+    android:background="@drawable/border_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -70,7 +70,7 @@
         android:layout_below="@id/radio_stt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/square_button_white3"
+        android:background="@drawable/square_button"
         android:drawableLeft="@drawable/add_item_35"
         android:gravity="center"
         android:text=" Add Items " />
@@ -82,7 +82,7 @@
         android:layout_below="@id/radio_stt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/square_button_white3"
+        android:background="@drawable/square_button"
         android:drawableLeft="@drawable/add_30"
         android:gravity="center"
         android:text=" ADD ROOM " />

@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.karama.BillActivity;
 import com.example.karama.BookingRoom;
 import com.example.karama.MainActivity;
 import com.example.karama.MemberActivity;
@@ -68,7 +69,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     ItemAdapter itemAdapter;
     List<Staff> staffList;
     List<Products> productsList;
-    TextView nav_customer,nav_room;
+    TextView nav_customer,nav_room,nav_service;
     private String m_newpass = "";
     private static MainMenu instance;
 
@@ -176,6 +177,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         tv_adduser.setOnClickListener(this);
         nav_customer.setOnClickListener(this);
         nav_room.setOnClickListener(this);
+        nav_service.setOnClickListener(this);
         add_product.setOnClickListener(this);
         reload_rcv.setOnClickListener(this);
 
@@ -200,6 +202,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         loadingGetStaff.setMessage("Getting List Staffs...!");
         nav = findViewById(R.id.nav);
         nav_product = findViewById(R.id.nav_product);
+        nav_service = findViewById(R.id.nav_service);
         btn_update = findViewById(R.id.btn_update);
         btn_logout = findViewById(R.id.btn_logout);
         view = findViewById(R.id.view);
@@ -329,6 +332,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 DialogAddItem dlAddItem = new DialogAddItem(MainMenu.this,"ADD");
                 dlAddItem.setCanceledOnTouchOutside(false);
                 dlAddItem.show();
+                break;
+            case R.id.nav_service:
+                Intent intent2 = new Intent(MainMenu.this, BillActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

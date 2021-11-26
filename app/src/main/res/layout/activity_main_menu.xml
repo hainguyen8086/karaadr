@@ -50,15 +50,15 @@
         android:gravity="center">
 
         <TextView
-            android:layout_toEndOf="@+id/nav_room"
             android:id="@+id/nav_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:layout_toEndOf="@+id/nav_room"
             android:drawableTop="@drawable/service_35"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Order"
+            android:text="BILL"
             android:textColor="@color/black" />
 
         <TextView
@@ -342,7 +342,7 @@
                         android:layout_height="25dp"
                         android:layout_below="@+id/update_adres2"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/border_button_white"
+                        android:background="@drawable/border_button"
                         android:text="UPDATE"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
@@ -370,7 +370,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/border_button_white"
+                android:background="@drawable/border_button"
                 android:drawableLeft="@drawable/adduse36"
                 android:drawablePadding="5dp"
                 android:gravity="center"

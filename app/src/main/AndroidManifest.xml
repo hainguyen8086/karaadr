@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Karama">
         <activity
+            android:name=".DetailBill"
+            android:exported="false" />
+        <activity
+            android:name=".BillActivity"
+            android:exported="false" />
+        <activity
             android:name=".Booking"
             android:exported="false" />
         <activity

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_toEndOf="@+id/view_exit"
-        android:background="@drawable/border_button_white"
+        android:background="@drawable/border_button"
         android:drawableRight="@drawable/mic_35"
         android:gravity="center"
         android:padding="5dp"

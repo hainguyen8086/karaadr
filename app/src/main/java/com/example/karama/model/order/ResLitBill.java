@@ -1,9 +1,9 @@
-package com.example.karama.model.room;
+package com.example.karama.model.order;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResOrder {
+public class ResLitBill {
     @SerializedName("timestamp")
     @Expose
     private String timestamp;
@@ -15,7 +15,7 @@ public class ResOrder {
     private String message;
     @SerializedName("data")
     @Expose
-    private DataOrder data;
+    private DataListBill data;
 
     public String getTimestamp() {
         return timestamp;
@@ -41,21 +41,11 @@ public class ResOrder {
         this.message = message;
     }
 
-    public DataOrder getData() {
+    public DataListBill getData() {
         return data;
     }
 
-    public void setData(DataOrder data) {
+    public void setData(DataListBill data) {
         this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "ResOrder{" +
-                "timestamp='" + timestamp + '\'' +
-                ", status=" + status +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
     }
 }
