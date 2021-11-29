@@ -12,6 +12,9 @@ public class DataBill {
     @SerializedName("bookingId")
     @Expose
     private String bookingId;
+    @SerializedName("guestPhoneNumber")
+    @Expose
+    private String guestPhoneNumber;
     @SerializedName("numberHoursBooked")
     @Expose
     private String numberHoursBooked;
@@ -82,5 +85,13 @@ public class DataBill {
 
     public void setProducts(List<ProductInBill> products) {
         this.products = products;
+    }
+
+    public String getGuestPhoneNumber() {
+        return guestPhoneNumber;
+    }
+
+    public void setGuestPhoneNumber(String guestPhoneNumber) {
+        this.guestPhoneNumber = guestPhoneNumber;
     }
 }

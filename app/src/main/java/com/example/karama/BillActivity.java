@@ -133,9 +133,11 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                         resBillList.clear();
                         if (resBill.getData().getData().size() > 0) {
                             for (int i = 0; i < resBill.getData().getData().size(); i++) {
-                                DataBill bill=resBill.getData().getData().get(i);
+                                DataBill bill = resBill.getData().getData().get(i);
                                 resBillList.add(bill);
                             }
+                        } else {
+                            Toast.makeText(mContext, datebook + " không có bill", Toast.LENGTH_SHORT).show();
                         }
                         rowBillAdapter = new RowBillAdapter(mContext, resBillList);
                         rcv_bill.setAdapter(rowBillAdapter);

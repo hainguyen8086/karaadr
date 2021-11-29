@@ -142,9 +142,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         UIHelper.showAlertDialogV3(mContext, resProfile.getStatus(), resProfile.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                             @Override
                             public void onSuccess() {
-                                Intent i = new Intent(MainMenu.this, MainActivity.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(i);
+//                                Intent i = new Intent(MainMenu.this, MainActivity.class);
+//                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(i);
+                                logout();
                             }
                         });
                     } else{

@@ -39,6 +39,7 @@ public class RowBillAdapter extends RecyclerView.Adapter<RowBillAdapter.ViewHold
         holder.bill_id.setText("Bill ID:\n"+bill.getId());
         holder.bookingId.setText("Booking ID:\n"+bill.getBookingId());
         holder.time_using.setText("Time Used:\n"+bill.getNumberHoursBooked());
+        holder.sdt_book.setText(bill.getGuestPhoneNumber());
         //go detail
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,12 +58,13 @@ public class RowBillAdapter extends RecyclerView.Adapter<RowBillAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView bill_id,bookingId, time_using;
+        TextView bill_id,bookingId, time_using,sdt_book;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             bill_id = itemView.findViewById(R.id.bill_id);
             bookingId = itemView.findViewById(R.id.bookingId);
             time_using = itemView.findViewById(R.id.time_using);
+            sdt_book = itemView.findViewById(R.id.sdt_book);
         }
     }
 }

@@ -42,6 +42,7 @@
 
         <TextView
             android:id="@+id/textrecep"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -174,7 +175,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-
             android:drawableTop="@drawable/discount_50"
             android:gravity="center"
             android:text="Discount" />
@@ -202,6 +202,21 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="billId\nxx" />
+
+        <TextView
+            android:id="@+id/bill_sdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_toEndOf="@+id/billId"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/square_button_white"
+            android:drawableLeft="@drawable/phone_24"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="sdt\nxx" />
+
 
         <TextView
             android:id="@+id/time_used"

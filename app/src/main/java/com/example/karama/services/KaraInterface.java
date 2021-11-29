@@ -191,7 +191,7 @@ public interface KaraInterface {
     //api 32.Xem hoa don theo ngay
     /*@GET("orders/day?page=0&size=50&sort=ASC")
     * */
-    @GET("orders/day?page=0&size=50&sort=ASC")
+    @POST("orders/day?page=0&size=50&sort=ASC")
     Call<ResLitBill> getBillByDate(@HeaderMap Map<String, String> headers,
                                    @Body RequestBody body);
     //api 33.Thanh toan hoa don

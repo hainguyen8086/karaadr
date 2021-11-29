@@ -21,6 +21,7 @@ import com.example.karama.model.order.ResBill;
 import com.example.karama.model.room.ResOrder;
 import com.example.karama.services.OrderServices;
 import com.example.karama.services.RumServices;
+import com.example.karama.views.DialogDiscount;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,13 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     //event
     TextView discount,destroy_bill,order, pay;
     //bill
-    TextView billId,time_used,discount_percent, percent_money;
+    TextView billId,time_used,discount_percent, percent_money,bill_sdt;
     RecyclerView rcv_order;
     String BOOKINGID="";
     Context mContext = this;
     List<ProductInBill> productInBillList;
     ItemOrderAdapter itemOrderAdapter;
+    private static DetailBill instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
                         billId.setText(resBill.getData().getId());
                         discount_percent.setText(resBill.getData().getDiscountPercent());
                         percent_money.setText(resBill.getData().getDiscountMoney());
+                        bill_sdt.setText(resBill.getData().getGuestPhoneNumber());
                         productInBillList.clear();
                         if (resBill.getData().getProducts().size() >= 1) {
                             for (int i = 0; i < resBill.getData().getProducts().size(); i++) {
@@ -130,9 +133,17 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
 
     private void initClick() {
         order.setOnClickListener(this);
+        discount.setOnClickListener(this);
     }
 
+    public static DetailBill getInstance() {
+        if (instance == null) {
+            instance = new DetailBill();
+        }
+        return instance;
+    }
     private void initView() {
+        instance = this;
         productInBillList = new ArrayList<>();
         bookingId = findViewById(R.id.bookingId);
         roomId = findViewById(R.id.roomId);
@@ -146,6 +157,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
         billId = findViewById(R.id.billId);
         time_used = findViewById(R.id.time_used);
         discount_percent = findViewById(R.id.discount_percent);
+        bill_sdt = findViewById(R.id.bill_sdt);
         percent_money = findViewById(R.id.percent_money);
         rcv_order = findViewById(R.id.rcv_order);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
@@ -157,9 +169,26 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.order:
-                //
+                
                 break;
-
+            case R.id.discount:
+                discount();
+                break;
+            case R.id.destroy_bill:
+                
+                break;
+            case R.id.pay:
+                
+                break;
         }
+    }
+
+    private void discount() {
+        DialogDiscount dldiscount = new DialogDiscount(DetailBill.this, BOOKINGID);
+        dldiscount.setCanceledOnTouchOutside(false);
+        dldiscount.show();
+    }
+    public void f5() {
+        loadBill(BOOKINGID);
     }
 }
