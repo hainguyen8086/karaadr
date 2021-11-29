@@ -4,24 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karama.adapter.ItemOrderAdapter;
+import com.example.karama.adapter.OrderItemToBillAdapter;
 import com.example.karama.helper.CallbackResponse;
 import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UIHelper;
+import com.example.karama.model.ResNullData;
+import com.example.karama.model.order.DataBill;
 import com.example.karama.model.order.ProductInBill;
 import com.example.karama.model.order.ResBill;
+import com.example.karama.model.product.Products;
+import com.example.karama.model.product.ResAllProducts;
 import com.example.karama.model.room.ResOrder;
 import com.example.karama.services.OrderServices;
+import com.example.karama.services.ProdServices;
 import com.example.karama.services.RumServices;
 import com.example.karama.views.DialogDiscount;
+import com.example.karama.views.DialogOrderToBill;
+import com.example.karama.views.DialogPayment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +53,10 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     List<ProductInBill> productInBillList;
     ItemOrderAdapter itemOrderAdapter;
     private static DetailBill instance;
+    Dialog dialogOrder;
+    List<Products> productsList;
+    OrderItemToBillAdapter orderItemToBillAdapter;
+    String ORDERID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +93,18 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
                         percent_money.setText(resBill.getData().getDiscountMoney());
                         bill_sdt.setText(resBill.getData().getGuestPhoneNumber());
                         productInBillList.clear();
+                        Log.e("==sizeProd", String.valueOf(resBill.getData().getProducts().size()));
                         if (resBill.getData().getProducts().size() >= 1) {
                             for (int i = 0; i < resBill.getData().getProducts().size(); i++) {
                                 ProductInBill item = resBill.getData().getProducts().get(i);
                                 productInBillList.add(item);
                             }
+                            Log.e("==productInBillList", "size" + String.valueOf(productInBillList.size()));
                             itemOrderAdapter = new ItemOrderAdapter(mContext, productInBillList);
+                            for (int i = 0; i < productInBillList.size(); i++) {
+                                Log.e("==prod:", productInBillList.get(i).getName());
+
+                            }
                             rcv_order.setAdapter(itemOrderAdapter);
                             itemOrderAdapter.notifyDataSetChanged();
                         }
@@ -107,6 +129,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
                         bookingId.setText(resOrder.getData().getBookingId());
                         roomId.setText(resOrder.getData().getRoomId());
                         orderId.setText(resOrder.getData().getOrderId());
+                        ORDERID = resOrder.getData().getOrderId();
                         time_start.setText(resOrder.getData().getStartTime());
                         statusCode.setText(resOrder.getData().getStatusCodeName());
                     } else if (resOrder.getStatus().equals("403")){
@@ -134,6 +157,8 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     private void initClick() {
         order.setOnClickListener(this);
         discount.setOnClickListener(this);
+        pay.setOnClickListener(this);
+        destroy_bill.setOnClickListener(this);
     }
 
     public static DetailBill getInstance() {
@@ -160,8 +185,10 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
         bill_sdt = findViewById(R.id.bill_sdt);
         percent_money = findViewById(R.id.percent_money);
         rcv_order = findViewById(R.id.rcv_order);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rcv_order.setLayoutManager(layoutManager);
+        dialogOrder = new Dialog(mContext);
+        productsList = new ArrayList<>();
 
     }
 
@@ -169,18 +196,118 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.order:
-                
+//                DialogOrderToBill dialogOrderToBill = new DialogOrderToBill(DetailBill.this,mContext,BOOKINGID);
+//                dialogOrderToBill.show();
+                showDialogOrder();
+
                 break;
             case R.id.discount:
                 discount();
                 break;
             case R.id.destroy_bill:
-                
+                destBill();
                 break;
             case R.id.pay:
-                
+                payment();
                 break;
         }
+    }
+
+    private void destBill() {
+        OrderServices.detroyBill(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResNullData resDest = (ResNullData) response.body();
+                if (resDest.getStatus().equals("200")) {
+                    // back ->reload -> hide status cancel
+                    onBackPressed();
+                } else if (resDest.getStatus().equals("403")){
+                    Log.e("==403", resDest.getMessage());
+                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(DetailBill.this, MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                } else{
+                    UIHelper.showAlertDialog(mContext,resDest.getStatus(),resDest.getMessage(),R.drawable.troll_64);
+                    Toast.makeText(mContext, resDest.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("==err", resDest.getStatus() + "-" + resDest.getMessage());
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+
+            }
+        },ORDERID);
+    }
+
+    private void payment() {
+        OrderServices.payment(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResBill resBill = (ResBill) response.body();
+                if (resBill.getStatus().equals("200")) {
+                    // show diloag bill-> DataaBill
+                    Log.e("==pay:", "200"+resBill.getData());
+
+                    DialogPayment dialogPayment = new DialogPayment(DetailBill.this, mContext,resBill.getData());
+                    dialogPayment.show();
+
+                } else if (resBill.getStatus().equals("403")){
+                    Log.e("==403", resBill.getMessage());
+                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(DetailBill.this, MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                } else{
+                    UIHelper.showAlertDialog(mContext,resBill.getStatus(),resBill.getMessage(),R.drawable.troll_64);
+                    Toast.makeText(mContext, resBill.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("==err", resBill.getStatus() + "-" + resBill.getMessage());
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+
+            }
+        },ORDERID);
+    }
+
+    private void showDialogOrder() {
+        dialogOrder.setCanceledOnTouchOutside(false);
+        dialogOrder.setContentView(R.layout.dialog_order_items);
+        // Set dialog title
+        dialogOrder.setTitle("Chose items order");
+        Window window = dialogOrder.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+        dialogOrder.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        RecyclerView rcv_items = dialogOrder.findViewById(R.id.rcv_items);
+        rcv_items.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
+        ProdServices.getAllProduct(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                ResAllProducts resAllProducts = (ResAllProducts) response.body();
+                if (resAllProducts.getStatus().equals("200")) {
+                    productsList.clear();
+                    for (int i = 0; i < resAllProducts.getData().getData().size(); i++) {
+                        productsList.add(resAllProducts.getData().getData().get(i));
+                    }
+                    orderItemToBillAdapter = new OrderItemToBillAdapter(mContext, productsList, BOOKINGID);
+                    rcv_items.setAdapter(orderItemToBillAdapter);
+                    orderItemToBillAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                Log.e("==err", error);
+            }
+        });
+        dialogOrder.show();
     }
 
     private void discount() {
@@ -190,5 +317,28 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     }
     public void f5() {
         loadBill(BOOKINGID);
+    }
+
+    public void orderItem(String paramOrder) {
+        Log.e("==", "call orderItem");
+        OrderServices.addSPtoBill(new CallbackResponse() {
+            @Override
+            public void Success(Response<?> response) {
+                Log.e("==", "onSuccess");
+                ResNullData resOrder = (ResNullData) response.body();
+                if (resOrder.getStatus().equals("200")) {
+                    //reload bill
+                    Log.e("==200", "sc");
+                    Toast.makeText(mContext, "Order thành công", Toast.LENGTH_SHORT).show();
+                    loadBill(BOOKINGID);
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                Toast.makeText(mContext, "Order thất bại", Toast.LENGTH_SHORT).show();
+                Log.e("==err", error);
+            }
+        },paramOrder);
     }
 }

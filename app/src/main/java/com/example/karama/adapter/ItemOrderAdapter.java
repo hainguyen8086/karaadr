@@ -34,15 +34,15 @@ public class ItemOrderAdapter extends RecyclerView.Adapter<ItemOrderAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductInBill item= billList.get(position);
-        holder.item_price.setText(item.getPrice());
+        holder.item_price.setText(item.getPrice()); //item.getPrice()
         holder.item_name.setText(item.getName());
-        holder.sl.setText(item.getQuantity());
+        holder.sl.setText(item.getQuantity());//item.getQuantity()
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return billList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +51,7 @@ public class ItemOrderAdapter extends RecyclerView.Adapter<ItemOrderAdapter.View
             super(itemView);
             sl = itemView.findViewById(R.id.sl);
             item_name = itemView.findViewById(R.id.item_name);
-            item_price = item_name.findViewById(R.id.item_price);
+            item_price = itemView.findViewById(R.id.item_price);
         }
     }
 }

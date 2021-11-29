@@ -64,7 +64,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         rcv_bill = findViewById(R.id.rcv_bill);
-        rcv_bill.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+        rcv_bill.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
         resBillList = new ArrayList<>();
         view_exit = findViewById(R.id.view_exit);
         date_sort = findViewById(R.id.date_sort);
@@ -132,6 +132,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                     if (resBill.getStatus().equals("200")) {
                         resBillList.clear();
                         if (resBill.getData().getData().size() > 0) {
+                            Log.e("==sizeLBill:", String.valueOf(resBill.getData().getData().size()));
                             for (int i = 0; i < resBill.getData().getData().size(); i++) {
                                 DataBill bill = resBill.getData().getData().get(i);
                                 resBillList.add(bill);

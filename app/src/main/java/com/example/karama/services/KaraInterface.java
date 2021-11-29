@@ -243,6 +243,7 @@ public interface KaraInterface {
     @GET("products-manager")
     Call<ResAllProducts> checkTokenSeeProduct(@HeaderMap Map<String, String> headers,
                                               @QueryMap HashMap<String, String> body);
+    //47
     @GET("products-manager/?page=0&size=300&sort=ASC")
     Call<ResAllProducts> getAllProduct(@HeaderMap Map<String, String> headers);
 
