@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     List<Products> productsList;
     OrderItemToBillAdapter orderItemToBillAdapter;
     String ORDERID;
+    ImageView view_exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +90,17 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
                 ResBill resBill = (ResBill) response.body();
                 if (resBill != null) {
                     if (resBill.getStatus().equals("200")) {
-                        billId.setText(resBill.getData().getId());
-                        discount_percent.setText(resBill.getData().getDiscountPercent());
-                        percent_money.setText(resBill.getData().getDiscountMoney());
+                        billId.setText("BILL_ID: "+resBill.getData().getId());
+                        try {
+                            discount_percent.setText(resBill.getData().getDiscountPercent().split("\\.")[0]+"%");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            percent_money.setText(resBill.getData().getDiscountMoney().split("\\.")[0]+" VND");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         bill_sdt.setText(resBill.getData().getGuestPhoneNumber());
                         productInBillList.clear();
                         Log.e("==sizeProd", String.valueOf(resBill.getData().getProducts().size()));
@@ -126,11 +136,15 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
                 ResOrder resOrder = (ResOrder) response.body();
                 if (resOrder != null) {
                     if (resOrder.getStatus().equals("200")) {
-                        bookingId.setText(resOrder.getData().getBookingId());
-                        roomId.setText(resOrder.getData().getRoomId());
-                        orderId.setText(resOrder.getData().getOrderId());
+                        bookingId.setText("BOOKINGID: "+resOrder.getData().getBookingId());
+                        roomId.setText("ROOMID: "+resOrder.getData().getRoomId());
+                        orderId.setText("ORDERID: "+resOrder.getData().getOrderId());
                         ORDERID = resOrder.getData().getOrderId();
-                        time_start.setText(resOrder.getData().getStartTime());
+                        try {
+                            time_start.setText(resOrder.getData().getStartTime().split("T")[0]+"\n"+resOrder.getData().getStartTime().split("T")[1]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         statusCode.setText(resOrder.getData().getStatusCodeName());
                     } else if (resOrder.getStatus().equals("403")){
                         Log.e("==403", resOrder.getMessage());
@@ -159,6 +173,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
         discount.setOnClickListener(this);
         pay.setOnClickListener(this);
         destroy_bill.setOnClickListener(this);
+        view_exit.setOnClickListener(this);
     }
 
     public static DetailBill getInstance() {
@@ -189,6 +204,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
         rcv_order.setLayoutManager(layoutManager);
         dialogOrder = new Dialog(mContext);
         productsList = new ArrayList<>();
+        view_exit = findViewById(R.id.view_exit);
 
     }
 
@@ -196,10 +212,7 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.order:
-//                DialogOrderToBill dialogOrderToBill = new DialogOrderToBill(DetailBill.this,mContext,BOOKINGID);
-//                dialogOrderToBill.show();
                 showDialogOrder();
-
                 break;
             case R.id.discount:
                 discount();
@@ -209,6 +222,9 @@ public class DetailBill extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.pay:
                 payment();
+                break;
+            case R.id.view_exit:
+                onBackPressed();
                 break;
         }
     }

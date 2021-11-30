@@ -89,22 +89,23 @@ public class DialogAddCustomer extends Dialog {
         String phone = UHelper.onTextStr(mem_phone);
         String mail = UHelper.onTextStr(mem_email);
         if (UHelper.onValidate(fname)) {
-            Toast.makeText(activity, "Vui lòng nhập Username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Vui lòng nhập first name", Toast.LENGTH_SHORT).show();
             member_fname.requestFocus();
         } else if (UHelper.onValidate(lname)) {
-            Toast.makeText(activity, "Vui lòng nhập Username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Vui lòng nhập last name", Toast.LENGTH_SHORT).show();
             mem_lname.requestFocus();
         }else if (UHelper.onValidate(gend)) {
-            Toast.makeText(activity, "Vui lòng nhập Username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Vui lòng nhập giới tính", Toast.LENGTH_SHORT).show();
             mem_gender.requestFocus();
         }else if (UHelper.onValidate(adres)) {
-            Toast.makeText(activity, "Vui lòng nhập Username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Vui lòng nhập địa chỉ", Toast.LENGTH_SHORT).show();
             mem_adress.requestFocus();
         }else if (UHelper.onValidate(phone)) {
-            Toast.makeText(activity, "Vui lòng nhập Username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
             mem_phone.requestFocus();
-        } else if (UHelper.onValidate(mail)) {
-            Toast.makeText(activity, "Vui lòng nhập Username", Toast.LENGTH_SHORT).show();
+        } else if (UHelper.onValidate(mail) && typeuse.equals("ADD")) {
+
+            Toast.makeText(activity, "Vui lòng nhập email", Toast.LENGTH_SHORT).show();
             mem_email.requestFocus();
         } else {
             UIHelper.showAlertDialogV3(activity, "CONFIRM", "Bạn chắc chắn đã kiểm tra kỹ thông tin ", R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
@@ -118,7 +119,9 @@ public class DialogAddCustomer extends Dialog {
                         jsonObject.put("gender", gend);
                         jsonObject.put("address1", adres);
                         jsonObject.put("phoneNumber", phone);
-                        jsonObject.put("email", mail);
+                        if (typeuse.equals("ADD")) {
+                            jsonObject.put("email", mail);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -226,7 +229,8 @@ public class DialogAddCustomer extends Dialog {
             mem_gender.setText(customer.getGender());
             mem_adress.setText(customer.getAddress1());
             mem_phone.setText(customer.getPhoneNumber());
-            mem_email.setText(customer.getEmail());
+//            mem_email.setText(customer.getEmail());
+            mem_email.setVisibility(View.GONE);
             tv_update.setVisibility(View.VISIBLE);
         }
         if (typeUser.equals("ADD")) {

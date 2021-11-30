@@ -54,6 +54,14 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
         holder.orderId.setText("OrderID :\n"+recep.getOrderId());
         holder.time_start.setText("Time Start :\n"+recep.getStartTime());
         holder.statusCode.setText("Status :\n"+recep.getStatusCodeName());
+        if (recep.getStatusCodeName().equals("PENDING")) {
+            holder.checkin.setVisibility(View.VISIBLE);
+            holder.cancel_booking.setVisibility(View.VISIBLE);
+        }
+        if (recep.getStatusCodeName().equals("BOOKED")) {
+            holder.cancel_booking.setVisibility(View.VISIBLE);
+        }
+
         holder.checkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +145,8 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
             statusCode = itemView.findViewById(R.id.statusCode);
             checkin = itemView.findViewById(R.id.checkin);
             cancel_booking = itemView.findViewById(R.id.cancel_booking);
+            checkin.setVisibility(View.GONE);
+            cancel_booking.setVisibility(View.GONE);
 
 
         }

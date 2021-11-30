@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,15 +36,16 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class DialogReceptByPhone extends Dialog {
+public class DialogReceptByPhone extends Dialog implements View.OnClickListener {
     Activity activity;
     DataOrder order;
     RecyclerView recyclerView;
     ReceptByPhoneAdapter receptByPhoneAdapter;
-    List<DataOrder> orderList;
+    List<DataOrder> orderList,listShow;
     TextView title;
     String sdt;
     ImageView view_close;
+    RadioButton rdbtn_booked,rdbtn_cancel, rdbtn_done,rdbtn_pending,rdbtn_all;
     private static DialogReceptByPhone instance;
 
 //    ImageView splash;
@@ -66,9 +69,25 @@ public class DialogReceptByPhone extends Dialog {
             }
         });
         loadAllOrderRecept();
+        rdbtn_booked.setOnClickListener(this);
+        rdbtn_cancel.setOnClickListener(this);
+        rdbtn_done.setOnClickListener(this);
+        rdbtn_pending.setOnClickListener(this);
+        rdbtn_all.setOnClickListener(this);
 
     }
 
+    private void reloadOrderRecept(String type) {
+        listShow.clear();
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).getStatusCodeName().equals(type)) {
+                listShow.add(orderList.get(i));
+            }
+        }
+        receptByPhoneAdapter = new ReceptByPhoneAdapter(activity.getApplicationContext(), listShow);
+        recyclerView.setAdapter(receptByPhoneAdapter);
+        receptByPhoneAdapter.notifyDataSetChanged();
+    }
     public void loadAllOrderRecept() {
         RumServices.getListOrderBySDT(new CallbackResponse() {
             @Override
@@ -132,9 +151,43 @@ public class DialogReceptByPhone extends Dialog {
     private void initView() {
         instance = this;
         orderList = new ArrayList<>();
+        listShow = new ArrayList<>();
         title = findViewById(R.id.title_order);
         recyclerView = findViewById(R.id.rcv_order);
         view_close = findViewById(R.id.view_close);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity.getApplicationContext(),LinearLayoutManager.VERTICAL,false));
+        rdbtn_booked = findViewById(R.id.rdbtn_booked);
+        rdbtn_cancel = findViewById(R.id.rdbtn_cancel);
+        rdbtn_done = findViewById(R.id.rdbtn_done);
+        rdbtn_pending = findViewById(R.id.rdbtn_pending);
+        rdbtn_all = findViewById(R.id.rdbtn_all);
+        rdbtn_all.setChecked(true);
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rdbtn_booked:
+                Log.e("==", "rdbtn_booked");
+                reloadOrderRecept("BOOKED");
+                break;
+            case R.id.rdbtn_done:
+                Log.e("==", "rdbtn_done");
+                reloadOrderRecept("DONE");
+                break;
+            case R.id.rdbtn_cancel:
+                Log.e("==", "rdbtn_cancel");
+                reloadOrderRecept("CANCEL");
+                break;
+            case R.id.rdbtn_pending:
+                Log.e("==", "rdbtn_pending");
+                reloadOrderRecept("PENDING");
+                break;
+            case R.id.rdbtn_all:
+                loadAllOrderRecept();
+                break;
+        }
     }
 }

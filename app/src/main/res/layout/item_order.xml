@@ -12,19 +12,22 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_toEndOf="@+id/item_name"
         android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/item_name"
         android:gravity="center"
         android:padding="5dp"
-        android:text="SL"
+        android:textSize="15dp"
+        android:text="xSL"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:padding="5dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:paddingHorizontal="5dp"
         android:text="ten san pham" />
 
     <TextView
@@ -34,7 +37,7 @@
         android:layout_below="@+id/item_name"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:padding="5dp"
+        android:paddingHorizontal="5dp"
         android:text="SL" />
 
 </RelativeLayout>

@@ -28,3 +28,25 @@ row_one_recept -            "bookingId": 5,
                             "statusCodeName": "PENDING"
 WindowManager: BadTokenException or InvalidDisplayException, clean up.
 => Lỗi xử lí 403 ở các dialog
+//update UX & flow
+-update staff in profile of manager
+====customer acti ===
+-update customer : exists email -> hide editext email
+-recept in sw=ipe customer: filter by status: pending, done , cancel, booked
+hide/show button checkin - cancel booking
+-search by numberphone
+======booking room ====
+empty room -> filter by EMPTY
+color empty , booked ,
+view booking : time \n , add title ""
+title detail recept
+
+//detail bill:
+auto load today
+search sdt
+view by customer
+"" textview
+text double disocunt 20.0 time xxTxx
+ORDER: -serach sp
+list order
+xSL

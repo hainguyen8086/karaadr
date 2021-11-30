@@ -55,9 +55,9 @@ public class DialogPayment extends Dialog {
         bookingId.setText("BOOKINGID: "+dataBill.getBookingId());
         guestPhoneNumber.setText("GUEST PHONE: "+dataBill.getGuestPhoneNumber());
         numberHoursBooked.setText("HOURS BOOKED: "+dataBill.getNumberHoursBooked());
-        discountPercent.setText("Discount Percent"+dataBill.getDiscountPercent());
-        discountMoney.setText("Discount Monney"+dataBill.getDiscountMoney());
-        total.setText("TOTAL:"+dataBill.getTotal());
+        discountPercent.setText("Discount: "+dataBill.getDiscountPercent().split("\\.")+"%");
+        discountMoney.setText("Discount: "+dataBill.getDiscountMoney().split("\\.")+" VND");
+        total.setText("TOTAL: "+dataBill.getTotal().split("\\.")+" VND");
 
         adapter = new ItemOrderAdapter(mContext, dataBill.getProducts());
         rcv_order.setAdapter(adapter);

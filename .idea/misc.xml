@@ -24,6 +24,7 @@
         <entry key="app/src/main/res/layout/activity_main_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_member.xml" value="0.25" />
         <entry key="app/src/main/res/layout/btn_login.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/layout/card_list_customer.xml" value="0.18840579710144928" />
         <entry key="app/src/main/res/layout/card_member.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/custom_dialog_confirm_otp.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/dialog_add_customer.xml" value="0.33" />
@@ -33,7 +34,7 @@
         <entry key="app/src/main/res/layout/dialog_detail_room.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_item_load.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/dialog_order_items.xml" value="0.19270833333333334" />
-        <entry key="app/src/main/res/layout/dialog_recept_by_phone.xml" value="0.18840579710144928" />
+        <entry key="app/src/main/res/layout/dialog_recept_by_phone.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_sign_in.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_room.xml" value="0.2576" />

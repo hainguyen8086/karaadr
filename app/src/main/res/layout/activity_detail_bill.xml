@@ -5,6 +5,7 @@
     android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/view_exit"
         android:layout_width="wrap_content"
@@ -208,8 +209,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:layout_toEndOf="@+id/billId"
             android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/billId"
             android:background="@drawable/square_button_white"
             android:drawableLeft="@drawable/phone_24"
             android:drawablePadding="10dp"
@@ -276,9 +277,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_order"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@+id/textorder" />
+            android:layout_below="@+id/textorder"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>

@@ -8,7 +8,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,9 +39,10 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
     TextView textlist;
     RecyclerView rcv_customer;
     ProgressDialog loadingGetCustomer;
-    public List<Customer> customerList;
+    public List<Customer> customerList,listShow;
     CustomerAdapter customerAdapter;
     private static MemberActivity instance;
+    EditText sdt_input;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,32 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
         add_customer.setOnClickListener(this);
         view_exit.setOnClickListener(this);
         textlist.setOnClickListener(this);
+        sdt_input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.e("==", s.toString());
+                listShow.clear();
+                for (int i = 0; i < customerList.size(); i++) {
+                    if (customerList.get(i).getPhoneNumber().contains(s.toString())) {
+                        listShow.add(customerList.get(i));
+                    }
+                }
+                customerAdapter = new CustomerAdapter(mContext, listShow);
+                rcv_customer.setAdapter(customerAdapter);
+                customerAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     public static MemberActivity getInstance() {
@@ -67,6 +98,7 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
         dialogDetailCustomer.show();
     }
     private void initView() {
+        sdt_input = findViewById(R.id.sdt_input);
         instance = this;
         loadingGetCustomer=new ProgressDialog(mContext);
         loadingGetCustomer.setMessage("Đang lấy danh sách khách hàng ...");
@@ -77,6 +109,7 @@ public class MemberActivity extends AppCompatActivity implements View.OnClickLis
         rcv_customer = findViewById(R.id.rcv_customer);
         rcv_customer.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
         customerList = new ArrayList<>();
+        listShow = new ArrayList<>();
 
     }
 
