@@ -98,7 +98,7 @@
         android:drawableLeft="@drawable/update_36"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="update" />
+        android:text="UPDATE" />
 
     <TextView
         android:id="@+id/check_in"
@@ -109,29 +109,17 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:drawableLeft="@drawable/checkin_36"
+        android:drawableLeft="@drawable/recept_40"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="CHECKIN" />
+        android:text="CHECK \nRECEPT" />
 
-    <TextView
-        android:id="@+id/cancel_ic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/check_in"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:drawableTop="@drawable/cancel2_45"
-        android:gravity="center"
-        android:text="CANCEL\nBOOKING" />
+
     <TextView
         android:id="@+id/ic_lock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/check_in"
-        android:layout_toEndOf="@+id/cancel_ic"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
@@ -149,7 +137,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/cancel_ic"
         android:drawableTop="@drawable/unlock_36"
         android:gravity="center"
         android:text="UNLOCK" />

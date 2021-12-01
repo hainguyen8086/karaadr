@@ -6,7 +6,7 @@ api 16 xem ỏdẻ bill =sdt -> list khách hàng thêm swipe xem phiếu -> dia
 
 else if (resOrder.getStatus().equals("403")){
                         Log.e("==403", resOrder.getMessage());
-                        Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, resOrder.getMessage(), Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(DetailBill.this, MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
@@ -43,6 +43,8 @@ detail rooom
 title detail recept
 
 //detail bill:
+checkin-> xem recept by roomid api 13-> detail recept
+
 auto load today
 search sdt
 view by customer
@@ -51,3 +53,6 @@ text double disocunt 20.0 time xxTxx
 ORDER: -serach sp
 list order
 xSL
+//search order on detail bill
+status on detail bill
+recept DONE=> hide button

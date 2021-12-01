@@ -53,21 +53,26 @@ public class GridRoomAdapter extends RecyclerView.Adapter<GridRoomAdapter.ViewHo
         viewBinderHelper.setOpenOnlyOne(true);
         holder.room_name.setText(room.getName());
         holder.room_id.setText(room.getId());
+        holder.room_stt_booking.setText(room.getRoomBookedStatus());
         if (room.getRoomBookedStatus().equals("EMPTY")) {
-            holder.room_stt_booking.setText(room.getRoomBookedStatus());
             holder.room_stt_booking.setTextColor(Color.BLUE);
         }
         if (room.getRoomBookedStatus().equals("BOOKED")) {
-            holder.room_stt_booking.setText(room.getRoomBookedStatus());
             holder.room_stt_booking.setTextColor(Color.RED);
         }
+        if (room.getRoomBookedStatus().equals("RESERVED")) {
+            holder.room_stt_booking.setTextColor(Color.GREEN);
+        }
+        holder.room_stt_type.setText(room.getStatusCode());
 
         if (room.getStatusCode().equals("ENABLE")) {
             //set backgoround black
+            holder.room_stt_type.setTextColor(Color.parseColor("#058712"));
         } else {
             holder.main_layout.setBackground(mContext.getDrawable(R.drawable.square_button_block));
+            holder.room_stt_type.setTextColor(Color.parseColor("#fa0505"));
         }
-        holder.room_stt_type.setText(room.getStatusCode());
+
 
         if (room.getType().equals("VIP")) {
             holder.tag_type_view.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.vip_30,0,0);

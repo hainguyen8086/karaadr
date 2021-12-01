@@ -23,6 +23,7 @@ import com.example.karama.model.room.DataOrder;
 import com.example.karama.model.room.ResCheckin;
 import com.example.karama.services.RumServices;
 import com.example.karama.views.DialogReceptByPhone;
+import com.example.karama.views.DialogReceptByRoom;
 
 import java.util.List;
 
@@ -32,10 +33,12 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
     Context mContext;
     List<DataOrder> orderList;
     LayoutInflater layoutInflater;
+    String from;
 
-    public ReceptByPhoneAdapter(Context mContext, List<DataOrder> orderList) {
+    public ReceptByPhoneAdapter(Context mContext, List<DataOrder> orderList,String from) {
         this.mContext = mContext;
         this.orderList = orderList;
+        this.from = from;
         layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -77,7 +80,12 @@ public class ReceptByPhoneAdapter extends RecyclerView.Adapter<ReceptByPhoneAdap
                                 Log.e("checkin", "success");
                                 Toast.makeText(mContext, "Checkin thành công", Toast.LENGTH_SHORT).show();
 //                                UIHelper.showAlertDialog(mContext, "Check in succes _", resCheckin.toString(),R.drawable.ic_success_35);
-                                DialogReceptByPhone.getInstance().loadAllOrderRecept();
+                                if (from.equals("SDT")) {
+                                    DialogReceptByPhone.getInstance().loadAllOrderRecept();
+                                }
+                                if (from.equals("ROOMID")) {
+                                    DialogReceptByRoom.getInstance().loadAllOrderRecept();
+                                }
                             } else if (resCheckin.getStatus().equals("403")){
                                 UIHelper.showAlertDialogV3(mContext, resCheckin.getStatus(), resCheckin.getMessage(), R.drawable.troll_64, new IInterfaceModel.OnBackIInterface() {
                                     @Override

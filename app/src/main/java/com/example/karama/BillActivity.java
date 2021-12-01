@@ -70,7 +70,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
          customer_sort.setOnClickListener(this);
     }
     public static String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
         String strDate = sdfDate.format(now);

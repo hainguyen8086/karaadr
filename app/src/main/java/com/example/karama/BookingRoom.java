@@ -31,6 +31,8 @@ import com.example.karama.model.room.ResListRoom;
 import com.example.karama.services.RumServices;
 import com.example.karama.views.DialogAddRoom;
 import com.example.karama.views.DialogDetailRoom;
+import com.example.karama.views.DialogReceptByPhone;
+import com.example.karama.views.DialogReceptByRoom;
 import com.example.karama.views.MainMenu;
 
 import org.json.JSONException;
@@ -69,7 +71,7 @@ public class BookingRoom extends AppCompatActivity implements View.OnClickListen
 //        Log.e("date:", getTodaysDate());
     }
 
-    private void loadAllRoom() {
+    public void loadAllRoom() {
         loadRoom.show();
         RumServices.getAllRoom(new CallbackResponse() {
             @Override
@@ -363,4 +365,18 @@ public class BookingRoom extends AppCompatActivity implements View.OnClickListen
         finish();
         startActivity(intent);
     }
+
+    public void updateRoom(DataRoom room) {
+        DialogAddRoom dialogUpdateRoom = new DialogAddRoom(BookingRoom.this, "UPDATE", room);
+        dialogUpdateRoom.setCanceledOnTouchOutside(false);
+        dialogUpdateRoom.show();
+
+    }
+    public void getDialogRecept(String roomId) {
+        DialogReceptByRoom dialogReceptByRoom = new DialogReceptByRoom(BookingRoom.this, roomId);
+        dialogReceptByRoom.setCancelable(false);
+        dialogReceptByRoom.show();
+
+    }
+
 }

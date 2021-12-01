@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -19,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.karama.Booking;
 import com.example.karama.MainActivity;
 import com.example.karama.R;
 import com.example.karama.adapter.ReceptByPhoneAdapter;
@@ -28,7 +24,6 @@ import com.example.karama.helper.IInterfaceModel;
 import com.example.karama.helper.UIHelper;
 import com.example.karama.model.room.DataOrder;
 import com.example.karama.model.room.Res13ListOrder;
-import com.example.karama.services.KaraServices;
 import com.example.karama.services.RumServices;
 
 import java.util.ArrayList;
@@ -36,23 +31,21 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class DialogReceptByPhone extends Dialog implements View.OnClickListener {
+public class DialogReceptByRoom extends Dialog implements View.OnClickListener {
     Activity activity;
+    String roomId;
     DataOrder order;
     RecyclerView recyclerView;
     ReceptByPhoneAdapter receptByPhoneAdapter;
     List<DataOrder> orderList,listShow;
     TextView title;
-    String sdt;
     ImageView view_close;
     RadioButton rdbtn_booked,rdbtn_cancel, rdbtn_done,rdbtn_pending,rdbtn_all;
-    private static DialogReceptByPhone instance;
-
-//    ImageView splash;
-    public DialogReceptByPhone(@NonNull Activity context,String phone) {
+    private static DialogReceptByRoom instance;
+    public DialogReceptByRoom(@NonNull Activity context,String roomId) {
         super(context);
         this.activity = context;
-        this.sdt = phone;
+        this.roomId = roomId;
     }
 
     @Override
@@ -61,35 +54,18 @@ public class DialogReceptByPhone extends Dialog implements View.OnClickListener 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_recept_by_phone);
         initView();
-        tstAnimate();
-        view_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+
         loadAllOrderRecept();
         rdbtn_booked.setOnClickListener(this);
         rdbtn_cancel.setOnClickListener(this);
         rdbtn_done.setOnClickListener(this);
         rdbtn_pending.setOnClickListener(this);
         rdbtn_all.setOnClickListener(this);
-
+        view_close.setOnClickListener(this);
     }
 
-    private void reloadOrderRecept(String type) {
-        listShow.clear();
-        for (int i = 0; i < orderList.size(); i++) {
-            if (orderList.get(i).getStatusCodeName().equals(type)) {
-                listShow.add(orderList.get(i));
-            }
-        }
-        receptByPhoneAdapter = new ReceptByPhoneAdapter(activity.getApplicationContext(), listShow,"SDT");
-        recyclerView.setAdapter(receptByPhoneAdapter);
-        receptByPhoneAdapter.notifyDataSetChanged();
-    }
     public void loadAllOrderRecept() {
-        RumServices.getListOrderBySDT(new CallbackResponse() {
+        RumServices.getListOrder(new CallbackResponse() {
             @Override
             public void Success(Response<?> response) {
                 Res13ListOrder resListOrderRecept = (Res13ListOrder) response.body();
@@ -102,7 +78,7 @@ public class DialogReceptByPhone extends Dialog implements View.OnClickListener 
                             orderList.add(recep);
 
                         }
-                        receptByPhoneAdapter = new ReceptByPhoneAdapter(activity.getApplicationContext(), orderList,"SDT");
+                        receptByPhoneAdapter = new ReceptByPhoneAdapter(activity.getApplicationContext(), orderList,"ROOMID");
                         recyclerView.setAdapter(receptByPhoneAdapter);
                         receptByPhoneAdapter.notifyDataSetChanged();
                     } else if (resListOrderRecept.getStatus().equals("403")){
@@ -124,28 +100,13 @@ public class DialogReceptByPhone extends Dialog implements View.OnClickListener 
             public void Error(String error) {
 
             }
-        },sdt);
+        },roomId);
     }
-
-    public static DialogReceptByPhone getInstance() {
+    public static DialogReceptByRoom getInstance() {
         if (instance == null) {
-            instance = new DialogReceptByPhone(instance.activity, getInstance().sdt);
+            instance = new DialogReceptByRoom(instance.activity, getInstance().roomId);
         }
         return instance;
-    }
-
-    private void tstAnimate() {
-//        RotateAnimation anim = new RotateAnimation(0f, 30f, 5f, 5f);
-//        anim.setInterpolator(new LinearInterpolator());
-//        anim.setRepeatCount(Animation.INFINITE);
-//        anim.setDuration(200);
-//
-//// Start animating the image
-//        final ImageView splash =findViewById(R.id.splash);
-//        splash.startAnimation(anim);
-//
-//// Later.. stop the animation
-////        splash.setAnimation(null);
     }
 
     private void initView() {
@@ -162,7 +123,7 @@ public class DialogReceptByPhone extends Dialog implements View.OnClickListener 
         rdbtn_pending = findViewById(R.id.rdbtn_pending);
         rdbtn_all = findViewById(R.id.rdbtn_all);
         rdbtn_all.setChecked(true);
-        title.setText("List order by "+sdt);
+        title.setText("List order by "+roomId);
     }
 
     @Override
@@ -191,5 +152,17 @@ public class DialogReceptByPhone extends Dialog implements View.OnClickListener 
                 dismiss();
                 break;
         }
+
+    }
+    private void reloadOrderRecept(String type) {
+        listShow.clear();
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).getStatusCodeName().equals(type)) {
+                listShow.add(orderList.get(i));
+            }
+        }
+        receptByPhoneAdapter = new ReceptByPhoneAdapter(activity.getApplicationContext(), listShow,"ROOMID");
+        recyclerView.setAdapter(receptByPhoneAdapter);
+        receptByPhoneAdapter.notifyDataSetChanged();
     }
 }

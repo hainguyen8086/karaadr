@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -86,12 +87,25 @@ public class Booking extends AppCompatActivity implements View.OnClickListener {
         initDatePicker();
         initClick();
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                // do something here
+                onBackPressed();
+                Log.e("==", "on Back ");
+                BookingRoom.getInstance().f5();
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     private void initClick() {
         chose_time.setOnClickListener(this);
         chose_guest.setOnClickListener(this);
         booking.setOnClickListener(this);
         view_exit.setOnClickListener(this);
+
 
     }
 
