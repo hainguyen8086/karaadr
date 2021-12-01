@@ -2,6 +2,8 @@ package com.example.karama.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +53,22 @@ public class GridRoomAdapter extends RecyclerView.Adapter<GridRoomAdapter.ViewHo
         viewBinderHelper.setOpenOnlyOne(true);
         holder.room_name.setText(room.getName());
         holder.room_id.setText(room.getId());
-        holder.room_stt_booking.setText(room.getRoomBookedStatus());
+        if (room.getRoomBookedStatus().equals("EMPTY")) {
+            holder.room_stt_booking.setText(room.getRoomBookedStatus());
+            holder.room_stt_booking.setTextColor(Color.BLUE);
+        }
+        if (room.getRoomBookedStatus().equals("BOOKED")) {
+            holder.room_stt_booking.setText(room.getRoomBookedStatus());
+            holder.room_stt_booking.setTextColor(Color.RED);
+        }
+
+        if (room.getStatusCode().equals("ENABLE")) {
+            //set backgoround black
+        } else {
+            holder.main_layout.setBackground(mContext.getDrawable(R.drawable.square_button_block));
+        }
         holder.room_stt_type.setText(room.getStatusCode());
+
         if (room.getType().equals("VIP")) {
             holder.tag_type_view.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.vip_30,0,0);
             holder.tag_type_view.setText("VIP");

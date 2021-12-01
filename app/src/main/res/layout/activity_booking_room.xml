@@ -41,50 +41,49 @@
         android:drawableLeft="@drawable/add_40"
         android:gravity="center"
         android:text="New \nRoom" />
-
-    <TextView
-        android:id="@+id/all_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_exit"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+    <RadioGroup
+        android:id="@+id/radio_stt"
         android:layout_toEndOf="@+id/add_room"
-        android:drawableTop="@drawable/allblue_40"
-        android:gravity="center"
-        android:text="All \nRoom" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar_customer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/empty_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_exit"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@+id/all_room"
-        android:drawableTop="@drawable/empty_40"
-        android:gravity="center"
-        android:text="Empty\nRoom" />
-    <TextView
-        android:id="@+id/using_room"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTop="@drawable/sing_40"
-        android:layout_below="@+id/view_exit"
-        android:layout_toEndOf="@+id/empty_room"
-        android:text="Using\nRoom"
-        android:gravity="center"
-        android:layout_margin="10dp" />
+        <RadioButton
+            android:id="@+id/all_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/allblue_40"
+            android:gravity="center"
+            android:text="ALL" />
+
+        <RadioButton
+            android:id="@+id/empty_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/empty_40"
+            android:gravity="center"
+            android:text="EMPTY" />
+
+        <RadioButton
+            android:id="@+id/using_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/sing_40"
+            android:gravity="center"
+            android:text="USING" />
+    </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid_all_room"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/all_room"
+        android:layout_below="@+id/radio_stt"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"

@@ -162,8 +162,7 @@ public class DialogReceptByPhone extends Dialog implements View.OnClickListener 
         rdbtn_pending = findViewById(R.id.rdbtn_pending);
         rdbtn_all = findViewById(R.id.rdbtn_all);
         rdbtn_all.setChecked(true);
-
-
+        title.setText("List order by "+sdt);
     }
 
     @Override

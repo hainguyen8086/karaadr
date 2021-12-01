@@ -39,6 +39,7 @@ hide/show button checkin - cancel booking
 empty room -> filter by EMPTY
 color empty , booked ,
 view booking : time \n , add title ""
+detail rooom
 title detail recept
 
 //detail bill:

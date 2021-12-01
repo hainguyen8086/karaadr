@@ -20,49 +20,58 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_close_35"
         android:layout_alignParentRight="true" />
+
     <RadioGroup
-        android:layout_margin="5dp"
         android:id="@+id/radio_stt"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:layout_below="@+id/title_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_order"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
         <RadioButton
-            android:drawableLeft="@drawable/all_24"
-            android:text="ALL"
-            android:gravity="center"
             android:id="@+id/rdbtn_all"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RadioButton
-            android:drawableLeft="@drawable/booking_24"
-            android:text="BOOKED"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/all_24"
             android:gravity="center"
+            android:text="ALL" />
+
+        <RadioButton
             android:id="@+id/rdbtn_booked"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/booking_24"
+            android:gravity="center"
+            android:text="BOOKED" />
+
         <RadioButton
             android:id="@+id/rdbtn_pending"
-            android:gravity="center"
-            android:text="PENDING"
-            android:drawableLeft="@drawable/pending_24"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/pending_24"
+            android:gravity="center"
+            android:text="PENDING" />
+
         <RadioButton
             android:id="@+id/rdbtn_done"
-            android:gravity="center"
-            android:text="DONE"
-            android:drawableLeft="@drawable/done_24"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/done_24"
+            android:gravity="center"
+            android:text="DONE" />
+
         <RadioButton
             android:id="@+id/rdbtn_cancel"
-            android:gravity="center"
-            android:text="CANCEL"
-            android:drawableLeft="@drawable/cancel_24"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/cancel_24"
+            android:gravity="center"
+            android:text="CANCEL" />
 
 
     </RadioGroup>

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -48,7 +49,8 @@ public class BookingRoom extends AppCompatActivity implements View.OnClickListen
     List<DataRoom> roomList;
     GridRoomAdapter roomAdapter;
     ProgressDialog loadRoom,loadingAddRoom,loadingEmptyRoom,loadingUsingRoom;
-    TextView add_room,all_room,empty_room, using_room;
+    TextView add_room;
+    RadioButton all_room,empty_room, using_room;
     ImageView view_exit;
     int hour, minute;
     String timebook,datebook,hourbook;
@@ -186,6 +188,7 @@ public class BookingRoom extends AppCompatActivity implements View.OnClickListen
         add_room = findViewById(R.id.add_room);
         all_room = findViewById(R.id.all_room);
         empty_room = findViewById(R.id.empty_room);
+        all_room.setChecked(true);
         using_room = findViewById(R.id.using_room);
         view_exit = findViewById(R.id.view_exit);
 

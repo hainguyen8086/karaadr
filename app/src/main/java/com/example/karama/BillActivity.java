@@ -27,8 +27,10 @@ import com.example.karama.services.OrderServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Response;
@@ -52,6 +54,12 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initDatePicker();
         initClick();
+        Log.e("==date", getCurrentTimeStamp());
+        try {
+            loadBillByDate(getCurrentTimeStamp());
+        } catch (Exception e) {
+            Log.e("==excep:", e.getMessage());
+        }
     }
 
 
@@ -60,6 +68,13 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         view_exit.setOnClickListener(this);
         date_sort.setOnClickListener(this);
          customer_sort.setOnClickListener(this);
+    }
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
     }
 
     private void initView() {

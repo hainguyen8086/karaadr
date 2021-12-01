@@ -31,11 +31,12 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_marginLeft="5dp"
             android:id="@+id/room_name"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
             android:text="NAME" />
         <TextView
             android:layout_marginLeft="5dp"
@@ -54,6 +55,7 @@
             android:layout_below="@+id/room_name"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
+            android:textSize="15dp"
             android:layout_toEndOf="@+id/room_id"
             android:gravity="center"
             android:text="Status booking room" />

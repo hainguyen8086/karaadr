@@ -3,6 +3,7 @@ package com.example.karama.views;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -58,6 +59,13 @@ public class DialogDetailRoom extends Dialog implements View.OnClickListener {
         room_id.setText(room.getId());
         room_name.setText(room.getName());
         room_stt_booking.setText(room.getRoomBookedStatus());
+        if (room.getRoomBookedStatus().equals("EMPTY")) {
+            room_stt_booking.setTextColor(Color.BLUE);
+        }
+        if (room.getRoomBookedStatus().equals("BOOKED")) {
+            room_stt_booking.setTextColor(Color.RED);
+        }
+
         room_stt_type.setText(room.getStatusCode());
         if (room.getType().equals("VIP")) {
             tag_type_view.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.vip_30, 0, 0);
